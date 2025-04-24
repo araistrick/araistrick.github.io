@@ -1,0 +1,11 @@
+---
+layout: post
+title:  "View-Dependent Octree-based Mesh Extraction in Unbounded Scenes for Procedural Synthetic Data"
+date:   2024-07-06 3:24:59 +00:00
+image: /images/ocmesher.png
+categories: research    
+authors: "Zeyu Ma, Alexander Raistrick, Lahav Lipson, Jia Deng"
+paper: https://arxiv.org/abs/2312.08364
+code: https://github.com/princeton-vl/OcMesher
+venue: 3DV 2025
+---
