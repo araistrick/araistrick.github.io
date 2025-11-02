@@ -7,5 +7,5 @@ categories: research
 authors: "Jack Nugent, Siyang Wu, Zeyu Ma, Beining Han, Meenal Parakh, Abhishek Joshi, Lingjie Mei, Alexander Raistrick, Xinyuan Li, Jia Deng"
 paper: https://arxiv.org/abs/2504.16930
 code: https://github.com/princeton-vl/proc-depth-eval
-venue: NeurIPS
+venue: NeurIPS 2025
 ---
