@@ -1,11 +1,12 @@
 ---
 layout: post
-title:  "Procedural Generation of Articulated Simulation-Ready Assets"
+title:  "Infinigen Articulated: Procedural Generation of Articulated Simulation-Ready Assets"
 date:   2025-05-15
 image: /images/ca-infinigen-sim.gif
 categories: research    
 authors: "Abhishek Joshi, Beining Han, Jack Nugent, Max Gonzalez Saez-Diez, Yiming Zuo, Jonathan Liu, Hongyu Wen, Stamatis Alexandropoulos, Karhan Kayan, Anna Calveri, Tao Sun, Gaowen Liu, Yi Shao, Alexander Raistrick, Jia Deng"
 paper: https://arxiv.org/abs/2504.16930
 code: https://github.com/princeton-vl/infinigen/blob/main/docs/ExportingToSimulators.md
+dataset: https://huggingface.co/datasets/princeton-vl/infinigen-articulated
 venue: ArXiv
 ---
