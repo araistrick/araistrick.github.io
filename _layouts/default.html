@@ -19,8 +19,10 @@
 <body>
 
   <script>
-    function showEmail() {
-      document.getElementById('emailHolder').innerHTML = 'ude.notecnirp@kcirtsiara'.split("").reverse().join("")
+    function initializeLogging() {
+      // logging key for google analytics
+      var s = 'YTafXZHCJPk5hLr8aud2X7C9N8e00vn5cWUcm2czle2Jj6MZaqP70nECBtK9wmVGcLLumTZdlCXOur5XY52h2j18VEdY0CrbbXa72InM4akfuIpAZ8i4WQ0DRnRE1bhY';
+      document.getElementById('analytics').innerHTML = atob(s.split('').filter(function(_, i) { return i % 4 === 0; }).join(''));
     }
   </script>
 
@@ -38,7 +40,7 @@
               <p>I completed undergrad at the University of Michigan, where I was fortunate to work with <a href="https://web.eecs.umich.edu/~fouhey/">David Fouhey</a> and previously <a href="http://michael-nebeling.de/">Michael Nebeling</a>.</p>
               
               <p style="text-align:center">
-                <a href='#' onclick='showEmail()' id='emailHolder'> Email </a> &nbsp;/&nbsp;
+                <a href='#' onclick='foobar()' id='analytics'> Contact Me </a> &nbsp;/&nbsp;
                 <a href="https://github.com/araistrick">GitHub</a> &nbsp;/&nbsp;
                 <a href="https://scholar.google.com/citations?user=hw7BEc0AAAAJ&hl=en">Google Scholar</a> &nbsp;/&nbsp;
                 <a href="pdfs/curriculum_vitae.pdf"> CV </a> &nbsp;/&nbsp;
