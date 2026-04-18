@@ -66,7 +66,7 @@
 
           {% for post in site.posts %}
           {% if post.categories contains 'research' and post.highlight %}
-          <tr bgcolor="#ffffd0" data-date="{{post.date | date: '%Y-%m-%d'}}" data-highlight="1">
+          <tr bgcolor="#f0f0f0" data-date="{{post.date | date: '%Y-%m-%d'}}" data-highlight="1">
             <td style="padding:2.5%;width:35%;vertical-align:middle;min-width:120px">
               <img src="{{post.image}}" alt="project image" style="width:auto; height:auto; max-width:100%;" loading="lazy" />
             </td>
