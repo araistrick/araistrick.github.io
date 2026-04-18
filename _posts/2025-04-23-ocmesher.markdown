@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "View-Dependent Octree-based Mesh Extraction in Unbounded Scenes for Procedural Synthetic Data"
-date:   2024-07-06 3:24:59 +00:00
+date:   2023-12-13
 image: /images/ocmesher.png
 categories: research    
 authors: "Zeyu Ma, Alexander Raistrick, Lahav Lipson, Jia Deng"
