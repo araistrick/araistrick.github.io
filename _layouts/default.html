@@ -48,8 +48,7 @@
               </p>
             </td>
             <td style="padding:2.5%;width:30%;max-width:30%">
-              <img style="width:100%;max-width:100%" alt="profile photo" src="images/profile_circle.png">
-              <p style="text-align:center;font-size:0.5em;"><a href="images/profile_square.jpg">Download Profile Picture (Square)</a></p>
+              <img style="width:80%;max-width:80%;display:block;margin:0 auto" alt="profile photo" src="images/profile_circle.png">
             </td>
           </tr>
         </table>
@@ -59,7 +58,7 @@
           <tr>
             <td style="padding:2.5%;width:100%;vertical-align:middle">
               <h2 style="margin:0">Research</h2>
-              <button id="sort-toggle" type="button" style="font-family:inherit;font-size:0.9em;padding:4px 10px;border:1px solid #aaa;background:#f6f6f6;border-radius:4px;cursor:pointer;margin-top:6px">Sort: Highlighted</button>
+              <p style="margin:4px 0 0 0"><a id="sort-toggle" href="#" style="cursor:pointer">Sort: Highlighted</a></p>
             </td>
           </tr>
         </table>
@@ -248,7 +247,7 @@
         }
         sorted.forEach(function(r) { table.appendChild(r); });
       }
-      btn.addEventListener('click', function() { idx = (idx + 1) % modes.length; apply(); });
+      btn.addEventListener('click', function(e) { e.preventDefault(); idx = (idx + 1) % modes.length; apply(); });
     })();
   </script>
 </body>
