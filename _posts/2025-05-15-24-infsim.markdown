@@ -8,5 +8,5 @@ authors: "Abhishek Joshi, Beining Han, Jack Nugent, Max Gonzalez Saez-Diez, Yimi
 paper: https://arxiv.org/abs/2504.16930
 code: https://github.com/princeton-vl/infinigen/blob/main/docs/ExportingToSimulators.md
 dataset: https://huggingface.co/datasets/princeton-vl/infinigen-articulated
-venue: ArXiv
+venue: ArXiv - April 23, 2025
 ---

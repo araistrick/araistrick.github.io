@@ -8,5 +8,5 @@ highlight: true
 authors: "<b>Alexander Raistrick</b>, Karhan Kayan, Jack Nugent, David Yan, Lingjie Mei, Meenal Parakh, Hongyu Wen, Dylan Li, Yiming Zuo, Erich Liang, Jia Deng"
 paper: https://arxiv.org/abs/2604.26943
 code: https://github.com/princeton-vl/procfunc
-venue: ArXiv
+venue: ArXiv - April 29, 2026
 ---
