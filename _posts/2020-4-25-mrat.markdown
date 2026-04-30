@@ -4,7 +4,7 @@ title:  "MRAT: The Mixed Reality Analytics Toolkit"
 date:   2020-4-25 3:24:59 +00:00
 image: /images/mrat.jpg
 categories: research
-authors: "M. Nebeling, M. Speicher, X. Wang, S. Rajaram, B.D. Hall, Z. Xie, <b>A.R.E. Raistrick</b>, M. Aebersold, E.G. Happ, J. Wang, Y. Sun, L. Zhang, L. Ramsier, R. Kulkarni"
+authors: "M. Nebeling, M. Speicher, X. Wang, S. Rajaram, B.D. Hall, Z. Xie, A.R.E. Raistrick, M. Aebersold, E.G. Happ, J. Wang, Y. Sun, L. Zhang, L. Ramsier, R. Kulkarni"
 website: https://www.mi2lab.com/research/mrat/
 video: https://www.youtube.com/watch?v=DG5pqrQPdBc
 paper: http://michael-nebeling.de/publications/chi20b.pdf
