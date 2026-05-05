@@ -8,6 +8,7 @@ author: "Alexander Raistrick"
 authors: "Alexander Raistrick, Nilesh Kulkarni and David F. Fouhey"
 venue: BMVC 2021 <b> (Oral) </b>
 website: https://araistrick.github.io/collisionreplay
-paper: https://arxiv.org/pdf/2105.01061.pdf
+arxiv: https://arxiv.org/abs/2105.01061
+proceedings: https://bmva-archive.org.uk/bmvc/2021/conference/papers/paper_0762.html
 ---
 
