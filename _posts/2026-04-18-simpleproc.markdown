@@ -5,7 +5,7 @@ date:   2026-04-18
 image: /images/simpleproc.png
 categories: research
 authors: "Zeyu Ma, Alexander Raistrick, Jia Deng"
-paper: https://arxiv.org/abs/2604.04925
+arxiv: https://arxiv.org/abs/2604.04925
 dataset: https://huggingface.co/datasets/princeton-vl/SimpleProc
 code: https://github.com/princeton-vl/SimpleProc
 venue: ArXiv - April 6, 2026

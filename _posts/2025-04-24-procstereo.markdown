@@ -5,7 +5,7 @@ date:   2026-02-27
 image: /images/procstereo.png
 categories: research    
 authors: "David Yan, Alexander Raistrick, Jia Deng"
-paper: https://arxiv.org/abs/2504.16930
+arxiv: https://arxiv.org/abs/2504.16930
 code: https://github.com/princeton-vl/InfinigenStereo
 dataset: https://huggingface.co/datasets/princeton-vl/WMGStereo
 venue: CVPR 2026

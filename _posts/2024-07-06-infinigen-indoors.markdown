@@ -7,7 +7,8 @@ categories: research
 highlight: true
 authors: "Alexander Raistrick*, Lingjie Mei*, Karhan Kaan Kayan* (*equal contribution), David Yan, Yiming Zuo, Beining Han, Hongyu Wen, Meenal Parakh, Stamatis Alexandropoulos, Lahav Lipson, Zeyu Ma, Jia Deng"
 website: https://infinigen.org/
-paper: https://arxiv.org/abs/2406.11824
+arxiv: https://arxiv.org/abs/2406.11824
+proceedings: https://openaccess.thecvf.com/content/CVPR2024/html/Raistrick_Infinigen_Indoors_Photorealistic_Indoor_Scenes_using_Procedural_Generation_CVPR_2024_paper.html
 code: https://github.com/princeton-vl/infinigen
 venue: CVPR 2024
 ---

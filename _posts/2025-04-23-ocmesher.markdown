@@ -5,7 +5,8 @@ date:   2023-12-13
 image: /images/ocmesher.png
 categories: research    
 authors: "Zeyu Ma, Alexander Raistrick, Lahav Lipson, Jia Deng"
-paper: https://arxiv.org/abs/2312.08364
+arxiv: https://arxiv.org/abs/2312.08364
+proceedings: https://www.computer.org/csdl/proceedings-article/3dv/2025/385100a845/29t3rzRODrW
 code: https://github.com/princeton-vl/OcMesher
 venue: 3DV 2025
 ---
