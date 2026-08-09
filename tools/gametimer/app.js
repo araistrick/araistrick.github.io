@@ -175,13 +175,18 @@ function render() {
     button.style.setProperty("--orientation", `${settings.orientations[player] ?? defaultOrientations[player]}deg`);
     button.style.display = visible ? "block" : "none";
     if (!visible) return;
-    if (!button.firstElementChild) button.innerHTML = '<span class="timer__content"><span class="name"></span><span class="time"></span><span class="hint"></span></span>';
+    if (!button.firstElementChild) button.innerHTML = '<span class="timer__content"><span class="name"></span><span class="time"></span><span class="timer__helper"></span><span class="hint"></span></span>';
     button.querySelector(".name").textContent = `PLAYER #${orderIndex + 1}`;
     button.querySelector(".time").textContent = formatTime(displayedTime);
+    button.querySelector(".timer__helper").textContent = isDelayed ? "(before timebank starts)" : "(timebank remaining)";
     button.querySelector(".hint").textContent = active ? "TAP TO END TURN" : "HOLD TO MOVE";
   });
-  $("elapsed-time").textContent = formatTime(state.elapsed);
-  $("sum-time").textContent = formatTime(settings.order.reduce((sum, player) => sum + state.time[player], 0));
+  const elapsed = formatTime(state.elapsed);
+  const banked = formatTime(settings.order.reduce((sum, player) => sum + state.time[player], 0));
+  $("elapsed-time").textContent = elapsed;
+  $("elapsed-time-opposite").textContent = elapsed;
+  $("sum-time").textContent = banked;
+  $("sum-time-opposite").textContent = banked;
   let lapStart = 0;
   $("laps").innerHTML = state.laps.length ? `<span>LAPS</span><ol>${state.laps.map((duration) => {
     const lapEnd = lapStart + duration;

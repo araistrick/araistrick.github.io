@@ -16,9 +16,20 @@
       <section class="timer timer--bottom" data-slot="bottom"><button class="timer__button" data-player="2"></button></section>
       <section class="timer timer--left" data-slot="left"><button class="timer__button" data-player="3"></button></section>
       <button class="center" id="center-button" aria-label="Open clock settings">
-        <span class="center__label">TABLE TIME</span>
-        <strong id="elapsed-time">00:00</strong>
-        <span id="sum-time">00:00</span>
+        <span class="center__readout">
+          <span class="center__label">TABLE TIME</span>
+          <strong id="elapsed-time">00:00</strong>
+          <span class="center__helper">(elapsed)</span>
+          <span id="sum-time">00:00</span>
+          <span class="center__helper">(banked)</span>
+        </span>
+        <span class="center__readout center__readout--opposite" aria-hidden="true">
+          <span class="center__label">TABLE TIME</span>
+          <strong id="elapsed-time-opposite">00:00</strong>
+          <span class="center__helper">(elapsed)</span>
+          <span id="sum-time-opposite">00:00</span>
+          <span class="center__helper">(banked)</span>
+        </span>
         <span class="center__hint">TAP TO SET UP</span>
         <span class="center__laps" id="laps">LAPS —</span>
       </button>
