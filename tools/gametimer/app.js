@@ -72,11 +72,21 @@ function buzz() {
   const audio = new AudioContext();
   const oscillator = audio.createOscillator();
   const gain = audio.createGain();
-  oscillator.frequency.value = 176;
-  gain.gain.setValueAtTime(.16, audio.currentTime);
-  gain.gain.exponentialRampToValueAtTime(.001, audio.currentTime + .35);
+  const tremolo = audio.createOscillator();
+  const tremoloGain = audio.createGain();
+  oscillator.type = "sawtooth";
+  oscillator.frequency.value = 180;
+  tremolo.type = "square";
+  tremolo.frequency.value = 13;
+  gain.gain.setValueAtTime(.02, audio.currentTime);
+  gain.gain.linearRampToValueAtTime(.19, audio.currentTime + .03);
+  gain.gain.setValueAtTime(.19, audio.currentTime + 1.05);
+  gain.gain.exponentialRampToValueAtTime(.001, audio.currentTime + 1.25);
+  tremoloGain.gain.value = .06;
+  tremolo.connect(tremoloGain).connect(gain.gain);
   oscillator.connect(gain).connect(audio.destination);
-  oscillator.start(); oscillator.stop(audio.currentTime + .35);
+  oscillator.start(); tremolo.start();
+  oscillator.stop(audio.currentTime + 1.25); tremolo.stop(audio.currentTime + 1.25);
 }
 
 async function requestWakeLock() {
@@ -147,7 +157,13 @@ function render() {
   });
   $("elapsed-time").textContent = formatTime(state.elapsed);
   $("sum-time").textContent = formatTime(settings.order.reduce((sum, player) => sum + state.time[player], 0));
-  $("laps").textContent = state.laps.length ? `LAPS ${state.laps.map(formatTime).join(" · ")}` : "LAPS —";
+  let lapStart = 0;
+  $("laps").innerHTML = state.laps.length ? `<span>LAPS</span><ol>${state.laps.map((duration) => {
+    const lapEnd = lapStart + duration;
+    const entry = `<li>${formatTime(duration)} (${formatTime(lapStart)}–${formatTime(lapEnd)})</li>`;
+    lapStart = lapEnd;
+    return entry;
+  }).join("")}</ol>` : "LAPS —";
 }
 
 function endTurn(player) {
@@ -180,6 +196,7 @@ function renderColorPickers() {
     handle.addEventListener("pointermove", moveRowDrag);
     handle.addEventListener("pointerup", endRowDrag);
     handle.addEventListener("pointercancel", endRowDrag);
+    handle.addEventListener("lostpointercapture", endRowDrag);
   });
   $("player-color-fields").querySelectorAll("[data-adjust]").forEach((button) => button.addEventListener("click", adjustPlayerClock));
   $("player-color-fields").querySelectorAll(".player-clock").forEach((input) => {
@@ -238,6 +255,7 @@ function endRowDrag() {
 
 function openSettings() {
   state.running = false;
+  document.querySelector(".clock").classList.add("is-settings-open");
   $("player-count").value = settings.players;
   durationControls.forEach((name) => setDurationControl(name, settings[{ "starting-time": "starting", delay: "delay", increment: "increment", gift: "gift" }[name]]));
   playerOrder = [...settings.order];
@@ -351,7 +369,16 @@ $("player-count").addEventListener("input", () => { syncOutputs(); playerOrder =
 $("center-button").addEventListener("click", openSettings);
 $("reset-button").addEventListener("click", resetFromSettings);
 $("lap-button").addEventListener("click", addLap);
-$("settings").addEventListener("close", () => { if ($("settings").returnValue === "default") saveSettings(); });
-document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") requestWakeLock(); });
+$("settings").addEventListener("close", () => {
+  document.querySelector(".clock").classList.remove("is-settings-open");
+  if ($("settings").returnValue === "default") saveSettings();
+});
+window.addEventListener("pointerup", endRowDrag);
+window.addEventListener("pointercancel", endRowDrag);
+window.addEventListener("blur", endRowDrag);
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") requestWakeLock();
+  else endRowDrag();
+});
 resetClock();
 requestAnimationFrame(tick);
