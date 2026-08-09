@@ -2,10 +2,11 @@ const slots = ["top", "right", "bottom", "left"];
 const defaultColors = ["#e9e6de", "#d94a3b", "#26a6a6", "#e7bc3c"];
 const durationSteps = [...Array.from({ length: 13 }, (_, index) => index * 10), 150, 180, 210, 240, 270, 300, 360, 420, 480, 540, 600];
 const durationControls = ["starting-time", "delay", "increment", "gift"];
-const defaults = { players: 4, starting: 600, delay: 0, increment: 0, gift: 0, colors: defaultColors, durationFormat: "seconds" };
+const defaults = { players: 4, starting: 600, delay: 0, increment: 0, gift: 0, colors: defaultColors, order: [0, 1, 2, 3], durationFormat: "seconds" };
 const storedSettings = JSON.parse(localStorage.getItem("game-timer-settings") || "{}");
 if (storedSettings.durationFormat !== "seconds" && storedSettings.starting) storedSettings.starting *= 60;
 let settings = { ...defaults, ...storedSettings, colors: storedSettings.colors || defaultColors };
+settings.order = storedSettings.order || defaults.order.slice(0, settings.players);
 let state = { running: false, active: 0, elapsed: 0, lastTick: 0, turnStarted: 0, time: [] };
 let drag = null;
 let playerOrder = [];
@@ -61,7 +62,9 @@ function commitDuration(name) {
 }
 
 function resetClock() {
-  state = { running: false, active: 0, elapsed: 0, lastTick: 0, turnStarted: 0, time: Array(settings.players).fill(settings.starting * 1000), laps: [] };
+  const time = Array(4).fill(0);
+  settings.order.forEach((player) => { time[player] = settings.starting * 1000; });
+  state = { running: false, activeId: settings.order[0], elapsed: 0, lastTick: 0, turnStarted: 0, time, laps: [] };
   render();
 }
 
@@ -103,11 +106,11 @@ function tick(now) {
     const delta = now - state.lastTick;
     state.elapsed += delta;
     const spentTurn = now - state.turnStarted;
-    if (spentTurn > settings.delay * 1000) state.time[state.active] -= delta;
-    if (state.time[state.active] <= 0) {
+    if (spentTurn > settings.delay * 1000) state.time[state.activeId] -= delta;
+    if (state.time[state.activeId] <= 0) {
       buzz();
       flashOutOfTime();
-      state.time[state.active] = settings.gift * 1000;
+      state.time[state.activeId] = settings.gift * 1000;
       if (!settings.gift) state.running = false;
       state.turnStarted = now;
     }
@@ -121,8 +124,9 @@ function render() {
   const activeElapsed = performance.now() - state.turnStarted;
   timerSections.forEach((section, index) => {
     const player = Number(section.querySelector("button").dataset.player);
-    const visible = player < settings.players;
-    const active = state.running && player === state.active;
+    const orderIndex = settings.order.indexOf(player);
+    const visible = orderIndex !== -1;
+    const active = state.running && player === state.activeId;
     const delayRemaining = Math.max(0, settings.delay * 1000 - activeElapsed);
     const isDelayed = active && delayRemaining > 0;
     const displayedTime = isDelayed ? delayRemaining : state.time[player];
@@ -135,21 +139,22 @@ function render() {
     button.style.display = visible ? "block" : "none";
     if (!visible) return;
     if (!button.firstElementChild) button.innerHTML = '<span class="timer__content"><span class="name"></span><span class="time"></span><span class="hint"></span></span>';
-    button.querySelector(".name").textContent = `PLAYER #${player + 1}`;
+    button.querySelector(".name").textContent = `PLAYER #${orderIndex + 1}`;
     button.querySelector(".time").textContent = formatTime(displayedTime);
     button.querySelector(".hint").textContent = active ? "TAP TO END TURN" : "HOLD TO MOVE";
   });
   $("elapsed-time").textContent = formatTime(state.elapsed);
-  $("sum-time").textContent = formatTime(state.time.reduce((sum, time) => sum + time, 0));
+  $("sum-time").textContent = formatTime(settings.order.reduce((sum, player) => sum + state.time[player], 0));
   $("laps").textContent = state.laps.length ? `LAPS ${state.laps.map(formatTime).join(" · ")}` : "LAPS —";
 }
 
 function endTurn(player) {
-  if (player !== state.active && state.running) return;
+  if (player !== state.activeId && state.running) return;
   const now = performance.now();
-  if (!state.running) { keepScreenAwake(); state.running = true; state.lastTick = now; state.turnStarted = now; render(); return; }
+  if (!state.running) { keepScreenAwake(); state.activeId = player; state.running = true; state.lastTick = now; state.turnStarted = now; render(); return; }
   state.time[player] += settings.increment * 1000;
-  state.active = (player + 1) % settings.players;
+  const currentOrder = settings.order.indexOf(player);
+  state.activeId = settings.order[(currentOrder + 1) % settings.order.length];
   state.lastTick = now;
   state.turnStarted = now;
   render();
@@ -233,7 +238,7 @@ function openSettings() {
   state.running = false;
   $("player-count").value = settings.players;
   durationControls.forEach((name) => setDurationControl(name, settings[{ "starting-time": "starting", delay: "delay", increment: "increment", gift: "gift" }[name]]));
-  playerOrder = Array.from({ length: settings.players }, (_, index) => index);
+  playerOrder = [...settings.order];
   syncOutputs();
   renderColorPickers();
   $("settings").showModal();
@@ -243,27 +248,25 @@ function readSettings() {
   const players = +$("player-count").value;
   const rows = [...$("player-color-fields").children];
   const order = rows.map((row) => +row.dataset.player);
-  const colorValues = rows.map((row, index) => row.querySelector('input[type="color"]').value || settings.colors[index] || defaultColors[index]);
-  const playerTimes = rows.map((row) => parseExactDuration(row.querySelector(".player-clock").value) ?? 0);
+  const colorValues = [...settings.colors];
+  const playerTimes = [...state.time];
+  rows.forEach((row) => {
+    const player = +row.dataset.player;
+    colorValues[player] = row.querySelector('input[type="color"]').value || defaultColors[player];
+    playerTimes[player] = (parseExactDuration(row.querySelector(".player-clock").value) ?? 0) * 1000;
+  });
   return { players, starting: getDurationControl("starting-time"), delay: getDurationControl("delay"), increment: getDurationControl("increment"), gift: getDurationControl("gift"), colors: colorValues, order, playerTimes, durationFormat: "seconds" };
 }
 
 function saveSettings() {
   const nextSettings = readSettings();
-  const oldTime = state.time;
-  const oldActive = state.active;
-  const oldToNew = new Map(nextSettings.order.map((player, index) => [player, index]));
   settings = { ...nextSettings };
   delete settings.order;
   delete settings.playerTimes;
+  settings.order = nextSettings.order;
   localStorage.setItem("game-timer-settings", JSON.stringify(settings));
-  state.time = nextSettings.playerTimes.map((seconds) => seconds * 1000);
-  state.active = oldToNew.get(oldActive) ?? 0;
-  timerSections.forEach((section) => {
-    const button = section.querySelector("button");
-    const currentPlayer = +button.dataset.player;
-    button.dataset.player = oldToNew.get(currentPlayer) ?? currentPlayer;
-  });
+  state.time = nextSettings.playerTimes;
+  if (!settings.order.includes(state.activeId)) state.activeId = settings.order[0];
   render();
 }
 
