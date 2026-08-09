@@ -1,11 +1,13 @@
 const slots = ["top", "right", "bottom", "left"];
 const defaultColors = ["#e9e6de", "#d94a3b", "#26a6a6", "#e7bc3c"];
+const defaultOrientations = [180, -90, 0, 90];
+const orientationOptions = [0, 90, 180, -90];
 const durationSteps = [...Array.from({ length: 13 }, (_, index) => index * 10), 150, 180, 210, 240, 270, 300, 360, 420, 480, 540, 600];
 const durationControls = ["starting-time", "delay", "increment", "gift"];
-const defaults = { players: 4, starting: 600, delay: 0, increment: 0, gift: 0, colors: defaultColors, order: [0, 1, 2, 3], durationFormat: "seconds" };
+const defaults = { players: 4, starting: 600, delay: 0, increment: 0, gift: 0, colors: defaultColors, orientations: defaultOrientations, order: [0, 1, 2, 3], durationFormat: "seconds" };
 const storedSettings = JSON.parse(localStorage.getItem("game-timer-settings") || "{}");
 if (storedSettings.durationFormat !== "seconds" && storedSettings.starting) storedSettings.starting *= 60;
-let settings = { ...defaults, ...storedSettings, colors: storedSettings.colors || defaultColors };
+let settings = { ...defaults, ...storedSettings, colors: storedSettings.colors || defaultColors, orientations: storedSettings.orientations || defaultOrientations };
 settings.order = storedSettings.order || defaults.order.slice(0, settings.players);
 let state = { running: false, active: 0, elapsed: 0, lastTick: 0, turnStarted: 0, time: [] };
 let drag = null;
@@ -26,6 +28,10 @@ function formatTime(milliseconds) {
 
 function formatDuration(seconds) {
   return formatTime(seconds * 1000);
+}
+
+function orientationLabel(orientation) {
+  return { 0: "bottom", 90: "left", 180: "top", "-90": "right" }[orientation];
 }
 
 function nearestDurationStep(seconds) {
@@ -89,6 +95,20 @@ function buzz() {
   oscillator.stop(audio.currentTime + 1.25); tremolo.stop(audio.currentTime + 1.25);
 }
 
+function delayChime() {
+  const audio = new AudioContext();
+  const oscillator = audio.createOscillator();
+  const gain = audio.createGain();
+  oscillator.type = "sine";
+  oscillator.frequency.setValueAtTime(540, audio.currentTime);
+  oscillator.frequency.exponentialRampToValueAtTime(360, audio.currentTime + .2);
+  gain.gain.setValueAtTime(.001, audio.currentTime);
+  gain.gain.exponentialRampToValueAtTime(.16, audio.currentTime + .015);
+  gain.gain.exponentialRampToValueAtTime(.001, audio.currentTime + .22);
+  oscillator.connect(gain).connect(audio.destination);
+  oscillator.start(); oscillator.stop(audio.currentTime + .22);
+}
+
 async function requestWakeLock() {
   if (!keepAwake || !("wakeLock" in navigator) || document.visibilityState !== "visible") return;
   try {
@@ -116,7 +136,11 @@ function tick(now) {
     const delta = now - state.lastTick;
     state.elapsed += delta;
     const spentTurn = now - state.turnStarted;
-    if (spentTurn > settings.delay * 1000) state.time[state.activeId] -= delta;
+    const previousSpentTurn = state.lastTick - state.turnStarted;
+    const delayEndsAt = settings.delay * 1000;
+    if (delayEndsAt && previousSpentTurn < delayEndsAt && spentTurn >= delayEndsAt) delayChime();
+    const countingFrom = Math.max(state.lastTick, state.turnStarted + delayEndsAt);
+    state.time[state.activeId] -= Math.max(0, now - countingFrom);
     if (state.time[state.activeId] <= 0) {
       buzz();
       flashOutOfTime();
@@ -148,6 +172,7 @@ function render() {
     section.dataset.empty = String(!visible);
     section.style.setProperty("--color", settings.colors[player] || defaultColors[player]);
     const button = section.querySelector("button");
+    button.style.setProperty("--orientation", `${settings.orientations[player] ?? defaultOrientations[player]}deg`);
     button.style.display = visible ? "block" : "none";
     if (!visible) return;
     if (!button.firstElementChild) button.innerHTML = '<span class="timer__content"><span class="name"></span><span class="time"></span><span class="hint"></span></span>';
@@ -189,7 +214,8 @@ function renderColorPickers() {
   $("player-color-fields").innerHTML = playerOrder.map((player, index) => {
     const color = settings.colors[player] || defaultColors[player];
     const clock = formatDuration(Math.ceil((state.time[player] ?? settings.starting * 1000) / 1000));
-    return `<div class="player-row" data-player="${player}"><button class="drag-handle" type="button" aria-label="Move Player #${index + 1}">⠿</button><span class="player-row__name">Player #${index + 1}</span><div class="player-time-controls"><button type="button" data-adjust="-10" aria-label="Decrease Player #${index + 1} clock">−</button><input class="player-clock" inputmode="numeric" aria-label="Player #${index + 1} clock" value="${clock}" /><button type="button" data-adjust="10" aria-label="Increase Player #${index + 1} clock">+</button></div><input type="color" aria-label="Player #${index + 1} color" value="${color}" /></div>`;
+    const orientation = settings.orientations[player] ?? defaultOrientations[player];
+    return `<div class="player-row" data-player="${player}"><button class="drag-handle" type="button" aria-label="Move Player #${index + 1}">⠿</button><span class="player-row__name">Player #${index + 1}</span><button class="orientation-button" type="button" data-orientation="${orientation}" aria-label="Change Player #${index + 1} text facing">Faces ${orientationLabel(orientation)}</button><div class="player-time-controls"><button type="button" data-adjust="-10" aria-label="Decrease Player #${index + 1} clock">−</button><input class="player-clock" inputmode="numeric" aria-label="Player #${index + 1} clock" value="${clock}" /><button type="button" data-adjust="10" aria-label="Increase Player #${index + 1} clock">+</button></div><input type="color" aria-label="Player #${index + 1} color" value="${color}" /></div>`;
   }).join("");
   $("player-color-fields").querySelectorAll(".drag-handle").forEach((handle) => {
     handle.addEventListener("pointerdown", startRowDrag);
@@ -199,6 +225,7 @@ function renderColorPickers() {
     handle.addEventListener("lostpointercapture", endRowDrag);
   });
   $("player-color-fields").querySelectorAll("[data-adjust]").forEach((button) => button.addEventListener("click", adjustPlayerClock));
+  $("player-color-fields").querySelectorAll(".orientation-button").forEach((button) => button.addEventListener("click", cycleOrientation));
   $("player-color-fields").querySelectorAll(".player-clock").forEach((input) => {
     input.addEventListener("blur", normalizePlayerClock);
     input.addEventListener("keydown", (event) => {
@@ -208,6 +235,14 @@ function renderColorPickers() {
       input.blur();
     });
   });
+}
+
+function cycleOrientation(event) {
+  const button = event.currentTarget;
+  const current = +button.dataset.orientation;
+  const next = orientationOptions[(orientationOptions.indexOf(current) + 1) % orientationOptions.length];
+  button.dataset.orientation = String(next);
+  button.textContent = `Faces ${orientationLabel(next)}`;
 }
 
 function normalizePlayerClock(event) {
@@ -245,6 +280,7 @@ function endRowDrag() {
   [...$("player-color-fields").children].forEach((row, index) => {
     row.querySelector(".player-row__name").textContent = `Player #${index + 1}`;
     row.querySelector(".drag-handle").setAttribute("aria-label", `Move Player #${index + 1}`);
+    row.querySelector(".orientation-button").setAttribute("aria-label", `Change Player #${index + 1} text facing`);
     row.querySelector(".player-clock").setAttribute("aria-label", `Player #${index + 1} clock`);
     row.querySelector('[data-adjust="-10"]').setAttribute("aria-label", `Decrease Player #${index + 1} clock`);
     row.querySelector('[data-adjust="10"]').setAttribute("aria-label", `Increase Player #${index + 1} clock`);
@@ -269,13 +305,15 @@ function readSettings() {
   const rows = [...$("player-color-fields").children];
   const order = rows.map((row) => +row.dataset.player);
   const colorValues = [...settings.colors];
+  const orientationValues = [...settings.orientations];
   const playerTimes = [...state.time];
   rows.forEach((row) => {
     const player = +row.dataset.player;
     colorValues[player] = row.querySelector('input[type="color"]').value || defaultColors[player];
+    orientationValues[player] = +row.querySelector(".orientation-button").dataset.orientation;
     playerTimes[player] = (parseExactDuration(row.querySelector(".player-clock").value) ?? 0) * 1000;
   });
-  return { players, starting: getDurationControl("starting-time"), delay: getDurationControl("delay"), increment: getDurationControl("increment"), gift: getDurationControl("gift"), colors: colorValues, order, playerTimes, durationFormat: "seconds" };
+  return { players, starting: getDurationControl("starting-time"), delay: getDurationControl("delay"), increment: getDurationControl("increment"), gift: getDurationControl("gift"), colors: colorValues, orientations: orientationValues, order, playerTimes, durationFormat: "seconds" };
 }
 
 function saveSettings() {
