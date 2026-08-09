@@ -188,12 +188,12 @@ function render() {
   $("sum-time").textContent = banked;
   $("sum-time-opposite").textContent = banked;
   let lapStart = 0;
-  $("laps").innerHTML = state.laps.length ? `<span>LAPS</span><ol>${state.laps.map((duration) => {
+  $("laps").innerHTML = state.laps.length ? `<ol>${state.laps.map((duration, index) => {
     const lapEnd = lapStart + duration;
-    const entry = `<li>${formatTime(duration)} (${formatTime(lapStart)}–${formatTime(lapEnd)})</li>`;
+    const entry = `<li>Lap ${index + 1} ${formatTime(duration)} (${formatTime(lapStart)}–${formatTime(lapEnd)})</li>`;
     lapStart = lapEnd;
     return entry;
-  }).join("")}</ol>` : "LAPS —";
+  }).join("")}</ol>` : "—";
 }
 
 function endTurn(player) {
