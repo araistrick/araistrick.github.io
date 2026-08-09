@@ -129,10 +129,12 @@ function render() {
     const active = state.running && player === state.activeId;
     const delayRemaining = Math.max(0, settings.delay * 1000 - activeElapsed);
     const isDelayed = active && delayRemaining > 0;
+    const isCritical = active && !isDelayed && state.time[player] <= 15000;
     const displayedTime = isDelayed ? delayRemaining : state.time[player];
     section.style.display = "block";
     section.dataset.active = String(active);
     section.dataset.delay = String(isDelayed);
+    section.dataset.critical = String(isCritical);
     section.dataset.empty = String(!visible);
     section.style.setProperty("--color", settings.colors[player] || defaultColors[player]);
     const button = section.querySelector("button");
