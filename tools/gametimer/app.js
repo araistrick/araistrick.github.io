@@ -1,0 +1,352 @@
+const slots = ["top", "right", "bottom", "left"];
+const defaultColors = ["#e9e6de", "#d94a3b", "#26a6a6", "#e7bc3c"];
+const durationSteps = [...Array.from({ length: 13 }, (_, index) => index * 10), 150, 180, 210, 240, 270, 300, 360, 420, 480, 540, 600];
+const durationControls = ["starting-time", "delay", "increment", "gift"];
+const defaults = { players: 4, starting: 600, delay: 0, increment: 0, gift: 0, colors: defaultColors, durationFormat: "seconds" };
+const storedSettings = JSON.parse(localStorage.getItem("game-timer-settings") || "{}");
+if (storedSettings.durationFormat !== "seconds" && storedSettings.starting) storedSettings.starting *= 60;
+let settings = { ...defaults, ...storedSettings, colors: storedSettings.colors || defaultColors };
+let state = { running: false, active: 0, elapsed: 0, lastTick: 0, turnStarted: 0, time: [] };
+let drag = null;
+let playerOrder = [];
+let rowDrag = null;
+let alertTimer;
+let wakeLock;
+let keepAwake = false;
+
+const $ = (id) => document.getElementById(id);
+const timerSections = [...document.querySelectorAll(".timer")];
+
+function formatTime(milliseconds) {
+  const seconds = Math.max(0, Math.ceil(milliseconds / 1000));
+  const minutes = Math.floor(seconds / 60);
+  return `${String(minutes).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`;
+}
+
+function formatDuration(seconds) {
+  return formatTime(seconds * 1000);
+}
+
+function nearestDurationStep(seconds) {
+  return durationSteps.reduce((closest, step) => Math.abs(step - seconds) < Math.abs(closest - seconds) ? step : closest, durationSteps[0]);
+}
+
+function parseDuration(value) {
+  const match = value.trim().match(/^(?:(\d+):)?(\d+)(?:s)?$/i);
+  if (!match) return null;
+  const seconds = match[1] ? +match[1] * 60 + +match[2] : +match[2];
+  return nearestDurationStep(seconds);
+}
+
+function parseExactDuration(value) {
+  const match = value.trim().match(/^(?:(\d+):)?(\d+)(?:s)?$/i);
+  if (!match) return null;
+  return match[1] ? +match[1] * 60 + +match[2] : +match[2];
+}
+
+function setDurationControl(name, seconds) {
+  const snapped = nearestDurationStep(seconds);
+  $(name).value = String(durationSteps.indexOf(snapped));
+  $(`${name}-output`).value = formatDuration(snapped);
+}
+
+function getDurationControl(name) {
+  return durationSteps[+$(name).value];
+}
+
+function commitDuration(name) {
+  const output = $(`${name}-output`);
+  const seconds = parseDuration(output.value);
+  setDurationControl(name, seconds ?? getDurationControl(name));
+}
+
+function resetClock() {
+  state = { running: false, active: 0, elapsed: 0, lastTick: 0, turnStarted: 0, time: Array(settings.players).fill(settings.starting * 1000), laps: [] };
+  render();
+}
+
+function buzz() {
+  const audio = new AudioContext();
+  const oscillator = audio.createOscillator();
+  const gain = audio.createGain();
+  oscillator.frequency.value = 176;
+  gain.gain.setValueAtTime(.16, audio.currentTime);
+  gain.gain.exponentialRampToValueAtTime(.001, audio.currentTime + .35);
+  oscillator.connect(gain).connect(audio.destination);
+  oscillator.start(); oscillator.stop(audio.currentTime + .35);
+}
+
+async function requestWakeLock() {
+  if (!keepAwake || !("wakeLock" in navigator) || document.visibilityState !== "visible") return;
+  try {
+    wakeLock = await navigator.wakeLock.request("screen");
+    wakeLock.addEventListener("release", () => { wakeLock = null; });
+  } catch {}
+}
+
+function keepScreenAwake() {
+  keepAwake = true;
+  requestWakeLock();
+}
+
+function flashOutOfTime() {
+  const alert = $("overtime-alert");
+  alert.classList.remove("is-active");
+  void alert.offsetWidth;
+  alert.classList.add("is-active");
+  clearTimeout(alertTimer);
+  alertTimer = setTimeout(() => alert.classList.remove("is-active"), 1000);
+}
+
+function tick(now) {
+  if (state.running) {
+    const delta = now - state.lastTick;
+    state.elapsed += delta;
+    const spentTurn = now - state.turnStarted;
+    if (spentTurn > settings.delay * 1000) state.time[state.active] -= delta;
+    if (state.time[state.active] <= 0) {
+      buzz();
+      flashOutOfTime();
+      state.time[state.active] = settings.gift * 1000;
+      if (!settings.gift) state.running = false;
+      state.turnStarted = now;
+    }
+    state.lastTick = now;
+    render();
+  }
+  requestAnimationFrame(tick);
+}
+
+function render() {
+  const activeElapsed = performance.now() - state.turnStarted;
+  timerSections.forEach((section, index) => {
+    const player = Number(section.querySelector("button").dataset.player);
+    const visible = player < settings.players;
+    const active = state.running && player === state.active;
+    const delayRemaining = Math.max(0, settings.delay * 1000 - activeElapsed);
+    const isDelayed = active && delayRemaining > 0;
+    const displayedTime = isDelayed ? delayRemaining : state.time[player];
+    section.style.display = "block";
+    section.dataset.active = String(active);
+    section.dataset.delay = String(isDelayed);
+    section.dataset.empty = String(!visible);
+    section.style.setProperty("--color", settings.colors[player] || defaultColors[player]);
+    const button = section.querySelector("button");
+    button.style.display = visible ? "block" : "none";
+    if (!visible) return;
+    if (!button.firstElementChild) button.innerHTML = '<span class="timer__content"><span class="name"></span><span class="time"></span><span class="hint"></span></span>';
+    button.querySelector(".name").textContent = `PLAYER #${player + 1}`;
+    button.querySelector(".time").textContent = formatTime(displayedTime);
+    button.querySelector(".hint").textContent = active ? "TAP TO END TURN" : "HOLD TO MOVE";
+  });
+  $("elapsed-time").textContent = formatTime(state.elapsed);
+  $("sum-time").textContent = formatTime(state.time.reduce((sum, time) => sum + time, 0));
+  $("laps").textContent = state.laps.length ? `LAPS ${state.laps.map(formatTime).join(" · ")}` : "LAPS —";
+}
+
+function endTurn(player) {
+  if (player !== state.active && state.running) return;
+  const now = performance.now();
+  if (!state.running) { keepScreenAwake(); state.running = true; state.lastTick = now; state.turnStarted = now; render(); return; }
+  state.time[player] += settings.increment * 1000;
+  state.active = (player + 1) % settings.players;
+  state.lastTick = now;
+  state.turnStarted = now;
+  render();
+}
+
+function syncOutputs() {
+  $("player-count-output").textContent = $("player-count").value;
+  durationControls.forEach((name) => { $(`${name}-output`).value = formatDuration(getDurationControl(name)); });
+}
+
+function renderColorPickers() {
+  const count = +$("player-count").value;
+  if (playerOrder.length !== count) playerOrder = Array.from({ length: count }, (_, index) => index);
+  $("player-color-fields").innerHTML = playerOrder.map((player, index) => {
+    const color = settings.colors[player] || defaultColors[player];
+    const clock = formatDuration(Math.ceil((state.time[player] ?? settings.starting * 1000) / 1000));
+    return `<div class="player-row" data-player="${player}"><button class="drag-handle" type="button" aria-label="Move Player #${index + 1}">⠿</button><span class="player-row__name">Player #${index + 1}</span><div class="player-time-controls"><button type="button" data-adjust="-10" aria-label="Decrease Player #${index + 1} clock">−</button><input class="player-clock" inputmode="numeric" aria-label="Player #${index + 1} clock" value="${clock}" /><button type="button" data-adjust="10" aria-label="Increase Player #${index + 1} clock">+</button></div><input type="color" aria-label="Player #${index + 1} color" value="${color}" /></div>`;
+  }).join("");
+  $("player-color-fields").querySelectorAll(".drag-handle").forEach((handle) => {
+    handle.addEventListener("pointerdown", startRowDrag);
+    handle.addEventListener("pointermove", moveRowDrag);
+    handle.addEventListener("pointerup", endRowDrag);
+    handle.addEventListener("pointercancel", endRowDrag);
+  });
+  $("player-color-fields").querySelectorAll("[data-adjust]").forEach((button) => button.addEventListener("click", adjustPlayerClock));
+  $("player-color-fields").querySelectorAll(".player-clock").forEach((input) => {
+    input.addEventListener("blur", normalizePlayerClock);
+    input.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter") return;
+      event.preventDefault();
+      normalizePlayerClock(event);
+      input.blur();
+    });
+  });
+}
+
+function normalizePlayerClock(event) {
+  const input = event.currentTarget;
+  const seconds = parseExactDuration(input.value);
+  input.value = formatDuration(Math.max(0, seconds ?? 0));
+}
+
+function adjustPlayerClock(event) {
+  const input = event.currentTarget.parentElement.querySelector(".player-clock");
+  const seconds = parseExactDuration(input.value) ?? 0;
+  input.value = formatDuration(Math.max(0, seconds + +event.currentTarget.dataset.adjust));
+}
+
+function startRowDrag(event) {
+  event.preventDefault();
+  const row = event.currentTarget.closest(".player-row");
+  event.currentTarget.setPointerCapture(event.pointerId);
+  rowDrag = row;
+  row.classList.add("is-dragging");
+}
+
+function moveRowDrag(event) {
+  if (!rowDrag) return;
+  const target = document.elementFromPoint(event.clientX, event.clientY)?.closest(".player-row");
+  if (!target || target === rowDrag) return;
+  const afterTarget = event.clientY > target.getBoundingClientRect().top + target.clientHeight / 2;
+  target.parentElement.insertBefore(rowDrag, afterTarget ? target.nextSibling : target);
+}
+
+function endRowDrag() {
+  if (!rowDrag) return;
+  rowDrag.classList.remove("is-dragging");
+  playerOrder = [...$("player-color-fields").children].map((row) => +row.dataset.player);
+  [...$("player-color-fields").children].forEach((row, index) => {
+    row.querySelector(".player-row__name").textContent = `Player #${index + 1}`;
+    row.querySelector(".drag-handle").setAttribute("aria-label", `Move Player #${index + 1}`);
+    row.querySelector(".player-clock").setAttribute("aria-label", `Player #${index + 1} clock`);
+    row.querySelector('[data-adjust="-10"]').setAttribute("aria-label", `Decrease Player #${index + 1} clock`);
+    row.querySelector('[data-adjust="10"]').setAttribute("aria-label", `Increase Player #${index + 1} clock`);
+    row.querySelector('input[type="color"]').setAttribute("aria-label", `Player #${index + 1} color`);
+  });
+  rowDrag = null;
+}
+
+function openSettings() {
+  state.running = false;
+  $("player-count").value = settings.players;
+  durationControls.forEach((name) => setDurationControl(name, settings[{ "starting-time": "starting", delay: "delay", increment: "increment", gift: "gift" }[name]]));
+  playerOrder = Array.from({ length: settings.players }, (_, index) => index);
+  syncOutputs();
+  renderColorPickers();
+  $("settings").showModal();
+}
+
+function readSettings() {
+  const players = +$("player-count").value;
+  const rows = [...$("player-color-fields").children];
+  const order = rows.map((row) => +row.dataset.player);
+  const colorValues = rows.map((row, index) => row.querySelector('input[type="color"]').value || settings.colors[index] || defaultColors[index]);
+  const playerTimes = rows.map((row) => parseExactDuration(row.querySelector(".player-clock").value) ?? 0);
+  return { players, starting: getDurationControl("starting-time"), delay: getDurationControl("delay"), increment: getDurationControl("increment"), gift: getDurationControl("gift"), colors: colorValues, order, playerTimes, durationFormat: "seconds" };
+}
+
+function saveSettings() {
+  const nextSettings = readSettings();
+  const oldTime = state.time;
+  const oldActive = state.active;
+  const oldToNew = new Map(nextSettings.order.map((player, index) => [player, index]));
+  settings = { ...nextSettings };
+  delete settings.order;
+  delete settings.playerTimes;
+  localStorage.setItem("game-timer-settings", JSON.stringify(settings));
+  state.time = nextSettings.playerTimes.map((seconds) => seconds * 1000);
+  state.active = oldToNew.get(oldActive) ?? 0;
+  timerSections.forEach((section) => {
+    const button = section.querySelector("button");
+    const currentPlayer = +button.dataset.player;
+    button.dataset.player = oldToNew.get(currentPlayer) ?? currentPlayer;
+  });
+  render();
+}
+
+function resetFromSettings() {
+  saveSettings();
+  resetClock();
+  $("settings").close("reset");
+}
+
+function addLap() {
+  const completedTime = state.laps.reduce((sum, lap) => sum + lap, 0);
+  const lapTime = state.elapsed - completedTime;
+  if (lapTime <= 0) return;
+  state.laps.push(lapTime);
+  render();
+}
+
+function swapPlayers(from, to) {
+  if (from === to) return;
+  const other = timerSections.find((section) => section.dataset.slot === to);
+  const button = timerSections.find((section) => section.dataset.slot === from).querySelector("button");
+  const otherButton = other.querySelector("button");
+  [button.dataset.player, otherButton.dataset.player] = [otherButton.dataset.player, button.dataset.player];
+  render();
+}
+
+function clearDrag() {
+  timerSections.forEach((section) => { section.classList.remove("is-dragging"); section.dataset.dropTarget = "false"; });
+  drag = null;
+}
+
+function setDragTarget(clientX, clientY) {
+  const target = document.elementFromPoint(clientX, clientY)?.closest(".timer");
+  drag.target = target?.dataset.slot;
+  timerSections.forEach((section) => { section.dataset.dropTarget = String(section.dataset.slot === drag.target && drag.target !== drag.from); });
+}
+
+timerSections.forEach((section) => {
+  const button = section.querySelector("button");
+  let holdTimer;
+  button.addEventListener("contextmenu", (event) => event.preventDefault());
+  button.addEventListener("pointerdown", (event) => {
+    button.setPointerCapture(event.pointerId);
+    holdTimer = setTimeout(() => {
+      drag = { from: section.dataset.slot, target: section.dataset.slot };
+      section.classList.add("is-dragging");
+    }, 350);
+  });
+  button.addEventListener("pointermove", (event) => { if (drag) setDragTarget(event.clientX, event.clientY); });
+  button.addEventListener("pointerup", (event) => {
+    clearTimeout(holdTimer);
+    if (!drag) { endTurn(+button.dataset.player); return; }
+    setDragTarget(event.clientX, event.clientY);
+    const target = drag.target;
+    const from = drag.from;
+    clearDrag();
+    if (target) swapPlayers(from, target);
+  });
+  button.addEventListener("pointercancel", () => { clearTimeout(holdTimer); clearDrag(); });
+});
+
+$("duration-ticks").innerHTML = durationSteps.map((_, index) => `<option value="${index}"></option>`).join("");
+durationControls.forEach((name) => {
+  $(name).min = "0";
+  $(name).max = String(durationSteps.length - 1);
+  $(name).step = "1";
+  $(name).setAttribute("list", "duration-ticks");
+  $(name).addEventListener("input", syncOutputs);
+  const output = $(`${name}-output`);
+  output.addEventListener("blur", () => commitDuration(name));
+  output.addEventListener("change", () => commitDuration(name));
+  output.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter") return;
+    event.preventDefault();
+    commitDuration(name);
+    output.blur();
+  });
+});
+$("player-count").addEventListener("input", () => { syncOutputs(); playerOrder = []; renderColorPickers(); });
+$("center-button").addEventListener("click", openSettings);
+$("reset-button").addEventListener("click", resetFromSettings);
+$("lap-button").addEventListener("click", addLap);
+$("settings").addEventListener("close", () => { if ($("settings").returnValue === "default") saveSettings(); });
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") requestWakeLock(); });
+resetClock();
+requestAnimationFrame(tick);

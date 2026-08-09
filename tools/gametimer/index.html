@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#10100f" />
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <title>Game Timer</title>
+  </head>
+  <body>
+    <div class="overtime-alert" id="overtime-alert" aria-hidden="true"></div>
+    <main class="clock" aria-label="Game timer">
+      <section class="timer timer--top" data-slot="top"><button class="timer__button" data-player="0"></button></section>
+      <section class="timer timer--right" data-slot="right"><button class="timer__button" data-player="1"></button></section>
+      <section class="timer timer--bottom" data-slot="bottom"><button class="timer__button" data-player="2"></button></section>
+      <section class="timer timer--left" data-slot="left"><button class="timer__button" data-player="3"></button></section>
+      <button class="center" id="center-button" aria-label="Open clock settings">
+        <span class="center__label">TABLE TIME</span>
+        <strong id="elapsed-time">00:00</strong>
+        <span id="sum-time">00:00</span>
+        <span class="center__hint">TAP TO SET UP</span>
+        <span class="center__laps" id="laps">LAPS —</span>
+      </button>
+    </main>
+
+    <dialog id="settings">
+      <form method="dialog" class="settings-form">
+        <header><div><p class="eyebrow">GAME TIMER</p><h1>Set the table</h1></div><button class="icon-button" value="cancel" aria-label="Close settings">×</button></header>
+        <label>Players <output id="player-count-output">4</output><input id="player-count" type="range" min="2" max="4" step="1" value="4" /></label>
+        <label>Starting clock <input class="duration-input" id="starting-time-output" inputmode="numeric" value="10:00" /><input id="starting-time" type="range" /></label>
+        <label>Delay before clock runs <input class="duration-input" id="delay-output" inputmode="numeric" value="00:00" /><input id="delay" type="range" /></label>
+        <label>Increment after each turn <input class="duration-input" id="increment-output" inputmode="numeric" value="00:00" /><input id="increment" type="range" /></label>
+        <label>Out-of-time gift <input class="duration-input" id="gift-output" inputmode="numeric" value="00:00" /><input id="gift" type="range" /></label>
+        <datalist id="duration-ticks"></datalist>
+        <section class="color-settings" aria-labelledby="color-settings-title">
+          <p id="color-settings-title">Player colors</p>
+          <div id="player-color-fields"></div>
+        </section>
+        <p class="setting-note">A gift restarts a clock after it expires. The buzzer always sounds first.</p>
+        <footer><button id="reset-button" type="button" class="ghost">Reset clocks</button><button id="lap-button" type="button" class="ghost">Add lap</button><button id="save-button" value="default" class="primary">Save &amp; play</button></footer>
+      </form>
+    </dialog>
+    <script src="app.js"></script>
+  </body>
+</html>
