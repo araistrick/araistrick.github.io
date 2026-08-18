@@ -49,3 +49,16 @@ a:visited {
 .external-icon {
   display: none;
 }
+
+iframe.external-embed.youtube {
+  width: 400px;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+
+video {
+  width: 400px;
+  max-width: 100%;
+  height: auto;
+}
