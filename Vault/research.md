@@ -78,7 +78,7 @@ _CVPR 2024_
 
 ## Infinigen: Infinite Photorealistic Worlds using Procedural Generation
 
-![[Attachments/ca-infinigen.gif]]
+![](https://youtu.be/6tgspeI-GHY)
 
 Alexander Raistrick\*, Lahav Lipson\*, Zeyu Ma\* (\*equal contribution, alphabetical order), Lingjie Mei, Mingzhe Wang, Yiming Zuo, Karhan Kayan, Hongyu Wen, Beining Han, Yihan Wang, Alejandro Newell, Hei Law, Ankit Goyal, Kaiyu Yang, Jia Deng
 
