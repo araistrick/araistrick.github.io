@@ -1,4 +1,5 @@
 import { QuartzConfig } from "./quartz/cfg"
+import { authorLinks } from "./quartz/data/authorLinks"
 import * as Plugin from "./quartz/plugins"
 
 const config: QuartzConfig = {
@@ -49,8 +50,10 @@ const config: QuartzConfig = {
   plugins: {
     transformers: [
       Plugin.FrontMatter(),
+      Plugin.CreatedModifiedDate({ priority: ["git", "filesystem"] }),
       Plugin.ObsidianFlavoredMarkdown({ enableInHtmlEmbed: false }),
       Plugin.GitHubFlavoredMarkdown(),
+      Plugin.AuthorLinks({ authors: authorLinks }),
       Plugin.CrawlLinks({ markdownLinkResolution: "shortest", lazyLoad: true }),
       Plugin.Description(),
     ],

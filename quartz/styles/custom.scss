@@ -74,8 +74,6 @@ h3 {
 
 h3#all-papers {
   margin: 4rem 0 1.5rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid currentColor;
   font-size: 1.25rem;
 }
 
@@ -118,7 +116,7 @@ h4 a[role="anchor"] {
 #research + ul a[href*="youtu"]:has(> img) {
   position: relative;
   display: block;
-  margin: 1rem 0;
+  margin: 0;
 }
 
 #research + ul a[href*="youtu"]:has(> img) > img {
@@ -187,6 +185,26 @@ a:visited {
   color: #000;
   text-decoration-thickness: 0.05em;
   text-underline-offset: 0.15em;
+}
+
+:is(article, footer) p a:not([role="anchor"]):not(:has(:is(img, video, iframe))) {
+  position: relative;
+}
+
+:is(article, footer) p a:not([role="anchor"]):not(:has(:is(img, video, iframe)))::after {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  display: block;
+  content: "◥";
+  transform: translate(-30%, -20%);
+  font-size: 0.5em;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  opacity: 0.55;
+  pointer-events: none;
+  text-decoration: none;
 }
 
 .center > hr,
