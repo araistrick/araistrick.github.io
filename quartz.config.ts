@@ -16,8 +16,8 @@ const config: QuartzConfig = {
       fontOrigin: "local",
       cdnCaching: false,
       typography: {
-        header: "serif",
-        body: "serif",
+        header: "Junicode",
+        body: "Junicode",
         code: "monospace",
       },
       colors: {
