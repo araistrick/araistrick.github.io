@@ -10,7 +10,7 @@ const config: QuartzConfig = {
     analytics: null,
     locale: "en-US",
     baseUrl: "araistrick.com",
-    ignorePatterns: ["private", "templates", ".obsidian", "images"],
+    ignorePatterns: ["private", "templates", ".obsidian"],
     defaultDateType: "published",
     theme: {
       fontOrigin: "local",
