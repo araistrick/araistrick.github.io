@@ -27,7 +27,7 @@ jobs:
           node-version-file: .node-version
           cache: npm
       - run: npm ci
-      - run: npm run quartz -- build --directory Vault
+      - run: npm run quartz -- build --directory WebsiteContent
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:

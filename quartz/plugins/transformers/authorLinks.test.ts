@@ -19,8 +19,11 @@ function document(children: RootContent[]): Root {
 }
 
 describe("author links", () => {
-  test("maps every author listed in the Vault", () => {
-    const markdown = fs.readFileSync(new URL("../../../Vault/index.md", import.meta.url), "utf8")
+  test("maps every author listed in the website content", () => {
+    const markdown = fs.readFileSync(
+      new URL("../../../WebsiteContent/index.md", import.meta.url),
+      "utf8",
+    )
     const allPapers = markdown.slice(markdown.indexOf("### All Papers"))
     const authorLines = allPapers.split("\n").filter((line) => /^_.*_$/.test(line))
     const authors = authorLines.flatMap((line) => {
