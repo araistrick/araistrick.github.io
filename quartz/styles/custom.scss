@@ -153,6 +153,18 @@ h4 a[role="anchor"] {
   pointer-events: none;
 }
 
+#research + ul > li > h3 + p {
+  margin: 1rem 0 0;
+}
+
+#research + ul > li > h3 + p > :is(a, img, video, iframe) {
+  margin: 0;
+}
+
+#research + ul > li > h3 + p + p {
+  margin-top: 0.375rem;
+}
+
 #all-papers ~ h4 {
   margin: 1.5rem 0 0.2rem;
 }
