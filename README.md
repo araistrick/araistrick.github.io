@@ -1,15 +1,22 @@
-# updated website
+# araistrick.com
 
-This repo is built on a fork of **Jekyll Now** from [this repository](https://github.com/barryclark/jekyll-now). **Jekyll** is a static site generator that's perfect for GitHub hosted blogs ([Jekyll Repository](https://github.com/jekyll/jekyll))
+A plain [Quartz 4](https://quartz.jzhao.xyz/) site. All page content is Markdown in `WebsiteContent/`, media is in `WebsiteContent/Attachments/`, and internal navigation uses Obsidian-style wikilinks.
 
-The website design is just a modification of [Jon Barron's website](https://jonbarron.info/) and is converted for my own use, re-purposing my old markdown posts. **Feel free to use template for your own purposes**, but please respect copyright for all the images/content in my `images`, `pdfs`, `_posts` folders. 
+## Local development
 
+Quartz requires Node.js 22 or newer.
 
+```sh
+npm ci
+npm run quartz -- build --directory WebsiteContent --serve
+```
 
-## issues
-* In general, jekyll will try to build a full page for every post. I skip that by forcing `permalink: /`. This creates multiple entries in sitemap.xml for index.html but is otherwise fine. 
-* If you want multiple paragraphs, consider using `excerpt_separator: <!--more-->` in `_config.yml`, for my own use I didn't need this. 
-* My own posts have lots of extra stuff left over from my old jekyll design ("author", long descriptions, etc.), feel free to ignore them
-* I use thumbnails, so I can upload arbitrary sized images but then only display small ones. The `_make_thumbnails.sh` script generates them and the html template looks in `tn/` for all images. 
-* I have three categories of post with slightly differerent formatting, so changing sizing requires edits in multiple paces. 
-* If you use this, I'd appreciate a link back either to this repo or my personal website so others can find this too. 
+## Obsidian
+
+Open `WebsiteContent/` as an Obsidian vault, or symlink this repository's `WebsiteContent/` directory into an existing vault. Keep `WebsiteContent/` as the real directory in this repository so GitHub Actions receives the files. Set `WebsiteContent/Attachments/` as Obsidian's attachment folder. Quartz resolves `[[wikilinks]]` and attachment embeds; `.obsidian/` settings are ignored. Commit and push changed notes or attachments to `master` to rebuild and publish the site automatically.
+
+## GitHub Pages
+
+Pushes to `master` are built and published by `.github/workflows/deploy.yml`.
+
+In the repository settings, select **Pages → Source → GitHub Actions** and set the custom domain to `araistrick.com`. Verify the domain at the account level before changing its DNS records, then enable **Enforce HTTPS** after GitHub provisions the certificate.
