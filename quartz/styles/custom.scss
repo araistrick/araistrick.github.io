@@ -76,6 +76,23 @@ h3 {
   font-size: 1.1rem;
 }
 
+#research-highlights + ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.5rem 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#research-highlights + ul > li {
+  min-width: 0;
+}
+
+#research-highlights + ul h3 {
+  margin: 0 0 0.75rem;
+}
+
 #all-research ~ h3 {
   margin-top: 2rem;
 }
@@ -119,4 +136,10 @@ iframe {
 img {
   max-width: 100%;
   height: auto;
+}
+
+@media (max-width: 40rem) {
+  #research-highlights + ul {
+    grid-template-columns: 1fr;
+  }
 }

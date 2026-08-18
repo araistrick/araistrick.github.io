@@ -14,45 +14,29 @@ I completed undergrad at the University of Michigan, where I was fortunate to wo
 
 ## Research Highlights
 
-### ProcFunc: Function-Oriented Abstractions for Procedural 3D Generation in Python
+- ### [ProcFunc: Function-Oriented Abstractions for Procedural 3D Generation in Python](#procfunc-function-oriented-abstractions-for-procedural-3d-generation-in-python-1)
 
-![[Attachments/procfunc.png|400]]
+  ![](https://www.youtube.com/watch?v=_T-BAda645U)
 
-Alexander Raistrick, Karhan Kayan, Jack Nugent, David Yan, Lingjie Mei, Meenal Parakh, Hongyu Wen, Dylan Li, Yiming Zuo, Erich Liang, Jia Deng
+  [arxiv](https://arxiv.org/abs/2604.26943) / [code](https://github.com/princeton-vl/procfunc)
 
-_ArXiv - April 29, 2026_
+- ### [Infinigen Articulated: Procedural Generation of Articulated Simulation-Ready Assets](#infinigen-articulated-procedural-generation-of-articulated-simulation-ready-assets-1)
 
-[arxiv](https://arxiv.org/abs/2604.26943) / [code](https://github.com/princeton-vl/procfunc)
+  ![[Attachments/ca-infinigen-sim.mp4|400]]
 
-### Infinigen Articulated: Procedural Generation of Articulated Simulation-Ready Assets
+  [arxiv](https://arxiv.org/abs/2505.10755) / [code](https://github.com/princeton-vl/infinigen/blob/main/docs/ExportingToSimulators.md) / [dataset](https://huggingface.co/datasets/princeton-vl/infinigen-articulated)
 
-![[Attachments/ca-infinigen-sim.mp4|400]]
+- ### [Infinigen Indoors: Photorealistic Indoor Scenes using Procedural Generation](#infinigen-indoors-photorealistic-indoor-scenes-using-procedural-generation-1)
 
-Abhishek Joshi, Beining Han, Jack Nugent, Max Gonzalez Saez-Diez, Yiming Zuo, Jonathan Liu, Hongyu Wen, Stamatis Alexandropoulos, Karhan Kayan, Anna Calveri, Tao Sun, Gaowen Liu, Yi Shao, Alexander Raistrick, Jia Deng
+  ![[Attachments/infinigen_indoor.jpeg|400]]
 
-_ArXiv - May 15, 2025_
+  [website](https://infinigen.org/) / [arxiv](https://arxiv.org/abs/2406.11824) / [code](https://github.com/princeton-vl/infinigen) / [proceedings](https://openaccess.thecvf.com/content/CVPR2024/html/Raistrick_Infinigen_Indoors_Photorealistic_Indoor_Scenes_using_Procedural_Generation_CVPR_2024_paper.html)
 
-[arxiv](https://arxiv.org/abs/2505.10755) / [code](https://github.com/princeton-vl/infinigen/blob/main/docs/ExportingToSimulators.md) / [dataset](https://huggingface.co/datasets/princeton-vl/infinigen-articulated)
+- ### [Infinigen: Infinite Photorealistic Worlds using Procedural Generation](#infinigen-infinite-photorealistic-worlds-using-procedural-generation-1)
 
-### Infinigen Indoors: Photorealistic Indoor Scenes using Procedural Generation
+  ![](https://youtu.be/6tgspeI-GHY)
 
-![[Attachments/infinigen_indoor.jpeg|400]]
-
-Alexander Raistrick\*, Lingjie Mei\*, Karhan Kaan Kayan\* (\*equal contribution), David Yan, Yiming Zuo, Beining Han, Hongyu Wen, Meenal Parakh, Stamatis Alexandropoulos, Lahav Lipson, Zeyu Ma, Jia Deng
-
-_CVPR 2024_
-
-[website](https://infinigen.org/) / [arxiv](https://arxiv.org/abs/2406.11824) / [code](https://github.com/princeton-vl/infinigen) / [proceedings](https://openaccess.thecvf.com/content/CVPR2024/html/Raistrick_Infinigen_Indoors_Photorealistic_Indoor_Scenes_using_Procedural_Generation_CVPR_2024_paper.html)
-
-### Infinigen: Infinite Photorealistic Worlds using Procedural Generation
-
-![](https://youtu.be/6tgspeI-GHY)
-
-Alexander Raistrick\*, Lahav Lipson\*, Zeyu Ma\* (\*equal contribution, alphabetical order), Lingjie Mei, Mingzhe Wang, Yiming Zuo, Karhan Kayan, Hongyu Wen, Beining Han, Yihan Wang, Alejandro Newell, Hei Law, Ankit Goyal, Kaiyu Yang, Jia Deng
-
-_CVPR 2023_
-
-[website](https://infinigen.org/) / [arxiv](https://arxiv.org/abs/2306.09310) / [code](https://infinigen.org/) / [video](https://youtu.be/6tgspeI-GHY) / [proceedings](https://openaccess.thecvf.com/content/CVPR2023/html/Raistrick_Infinite_Photorealistic_Worlds_Using_Procedural_Generation_CVPR_2023_paper.html)
+  [website](https://infinigen.org/) / [arxiv](https://arxiv.org/abs/2306.09310) / [code](https://infinigen.org/) / [video](https://youtu.be/6tgspeI-GHY) / [proceedings](https://openaccess.thecvf.com/content/CVPR2023/html/Raistrick_Infinite_Photorealistic_Worlds_Using_Procedural_Generation_CVPR_2023_paper.html)
 
 ## All Research
 
