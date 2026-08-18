@@ -12,6 +12,8 @@ I completed undergrad at the University of Michigan, where I was fortunate to wo
 
 [Email](mailto:alexrais@umich.edu) / [GitHub](https://github.com/araistrick) / [Google Scholar](https://scholar.google.com/citations?user=GYwaBgoAAAAJ&hl=en) / [[Attachments/curriculum_vitae.pdf|CV]] / [Twitter](https://twitter.com/alex_raistrick)
 
+Send me anonymous feedback [here](https://docs.google.com/forms/d/e/1FAIpQLSclvXp7rPuOjqX7T2s2AhVf62mVm1KBQG2wI-K_H98MKl55fw/viewform?usp=header)!
+
 ## Research
 
 - ### [ProcFunc: Function-Oriented Abstractions for Procedural 3D Generation in Python](#procfunc-function-oriented-abstractions-for-procedural-3d-generation-in-python-1)
