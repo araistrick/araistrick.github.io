@@ -1,5 +1,6 @@
 export { FrontMatter } from "./frontmatter"
 export { AuthorLinks } from "./authorLinks"
+export { EmailObfuscation } from "./emailObfuscation"
 export { GitHubFlavoredMarkdown } from "./gfm"
 export { Citations } from "./citations"
 export { CreatedModifiedDate } from "./lastmod"

@@ -55,6 +55,7 @@ const config: QuartzConfig = {
       Plugin.GitHubFlavoredMarkdown(),
       Plugin.AuthorLinks({ authors: authorLinks }),
       Plugin.CrawlLinks({ markdownLinkResolution: "shortest", lazyLoad: true }),
+      Plugin.EmailObfuscation(),
       Plugin.Description(),
     ],
     filters: [Plugin.RemoveDrafts()],
