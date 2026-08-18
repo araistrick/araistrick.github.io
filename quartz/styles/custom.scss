@@ -93,6 +93,14 @@ h3 {
   margin: 0 0 0.75rem;
 }
 
+#research-highlights + ul img,
+#research-highlights + ul video,
+#research-highlights + ul iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
 #all-research ~ h3 {
   margin-top: 2rem;
 }

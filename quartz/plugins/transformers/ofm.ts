@@ -247,9 +247,10 @@ export const ObsidianFlavoredMarkdown: QuartzTransformerPlugin<Partial<Options>>
                       },
                     }
                   } else if ([".mp4", ".webm", ".ogv", ".mov", ".mkv"].includes(ext)) {
+                    const poster = url.replace(/\.[^/.]+$/, "-poster.jpg")
                     return {
                       type: "html",
-                      value: `<video src="${url}" controls></video>`,
+                      value: `<video src="${url}" poster="${poster}" controls></video>`,
                     }
                   } else if (
                     [".mp3", ".webm", ".wav", ".m4a", ".ogg", ".3gp", ".flac"].includes(ext)

@@ -16,7 +16,7 @@ I completed undergrad at the University of Michigan, where I was fortunate to wo
 
 - ### [ProcFunc: Function-Oriented Abstractions for Procedural 3D Generation in Python](#procfunc-function-oriented-abstractions-for-procedural-3d-generation-in-python-1)
 
-  ![](https://www.youtube.com/watch?v=_T-BAda645U)
+  [![Infinigen 2 video](Attachments/infinigen2-youtube.jpg)](https://www.youtube.com/watch?v=_T-BAda645U)
 
   [arxiv](https://arxiv.org/abs/2604.26943) / [code](https://github.com/princeton-vl/procfunc)
 
@@ -34,7 +34,7 @@ I completed undergrad at the University of Michigan, where I was fortunate to wo
 
 - ### [Infinigen: Infinite Photorealistic Worlds using Procedural Generation](#infinigen-infinite-photorealistic-worlds-using-procedural-generation-1)
 
-  ![](https://youtu.be/6tgspeI-GHY)
+  [![Infinigen video](Attachments/infinigen-youtube.jpg)](https://youtu.be/6tgspeI-GHY)
 
   [website](https://infinigen.org/) / [arxiv](https://arxiv.org/abs/2306.09310) / [code](https://infinigen.org/) / [video](https://youtu.be/6tgspeI-GHY) / [proceedings](https://openaccess.thecvf.com/content/CVPR2023/html/Raistrick_Infinite_Photorealistic_Worlds_Using_Procedural_Generation_CVPR_2023_paper.html)
 
