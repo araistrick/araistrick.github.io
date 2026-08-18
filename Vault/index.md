@@ -12,31 +12,11 @@ I completed undergrad at the University of Michigan, where I was fortunate to wo
 
 [Email](mailto:alexrais@umich.edu) / [GitHub](https://github.com/araistrick) / [Google Scholar](https://scholar.google.com/citations?user=GYwaBgoAAAAJ&hl=en) / [[Attachments/curriculum_vitae.pdf|CV]] / [Twitter](https://twitter.com/alex_raistrick)
 
-## Coursework
-
-### Maximal Munch: Internet Search Engine in C++
-
-![[Attachments/munch.png]]
-
-_U-M EECS 398-001 Fall 2019 - System Design of a Search Engine_
-
-Alexander Raistrick, Adolfo Apolloni, Austin Kiekintveld, Brandon Kayes, Daniel Hoekwater and Ryan Wunderly
-
-Internet Search Engine built from scratch in C++, named after [this parsing principle](https://en.wikipedia.org/wiki/Maximal_munch). Indexed over 140M web pages, and served results in 1-3ms for most queries.
-
-## Teaching
-
-- [U-M EECS 398 - System Design of a Search Engine - Fall 2019](https://web.eecs.umich.edu/~nham/EECS398F19/)
-- [U-M EECS 280 - Programming and Intro Data Structures - Winter 2019](https://eecs280staff.github.io/eecs280.org/)
-- [U-M EECS 280 - Programming and Intro Data Structures - Fall 2020](https://eecs280staff.github.io/eecs280.org/)
-- Princeton COS529 - Advanced Computer Vision - Fall 2022
-- Princeton COS324 - Introduction to Machine Learning - Spring 2023 **(Grad. Student Teaching Award)**
-
 ## Research
 
 ### ProcFunc: Function-Oriented Abstractions for Procedural 3D Generation in Python
 
-![[Attachments/procfunc.png]]
+![[Attachments/procfunc.png|400]]
 
 Alexander Raistrick, Karhan Kayan, Jack Nugent, David Yan, Lingjie Mei, Meenal Parakh, Hongyu Wen, Dylan Li, Yiming Zuo, Erich Liang, Jia Deng
 
@@ -46,7 +26,7 @@ _ArXiv - April 29, 2026_
 
 ### SimpleProc: Fully Procedural Synthetic Data from Simple Rules for Multi-View Stereo
 
-![[Attachments/simpleproc.png]]
+![[Attachments/simpleproc.png|400]]
 
 Zeyu Ma, Alexander Raistrick, Jia Deng
 
@@ -56,7 +36,7 @@ _ArXiv - April 6, 2026_
 
 ### WMGStereo: What Makes Good Synthetic Training Data for Zero-Shot Stereo Matching?
 
-![[Attachments/procstereo.png]]
+![[Attachments/procstereo.png|400]]
 
 David Yan, Alexander Raistrick, Jia Deng
 
@@ -66,7 +46,7 @@ _CVPR 2026_
 
 ### Evaluating Robustness of Monocular Depth Estimation with Procedural Scene Perturbations
 
-![[Attachments/procdepthbench.png]]
+![[Attachments/procdepthbench.png|400]]
 
 Jack Nugent, Siyang Wu, Zeyu Ma, Beining Han, Meenal Parakh, Abhishek Joshi, Lingjie Mei, Alexander Raistrick, Xinyuan Li, Jia Deng
 
@@ -86,7 +66,7 @@ _ArXiv - May 15, 2025_
 
 ### View-Dependent Octree-based Mesh Extraction in Unbounded Scenes for Procedural Synthetic Data
 
-![[Attachments/ocmesher.png]]
+![[Attachments/ocmesher.png|400]]
 
 Zeyu Ma, Alexander Raistrick, Lahav Lipson, Jia Deng
 
@@ -96,7 +76,7 @@ _3DV 2025_
 
 ### Infinigen Indoors: Photorealistic Indoor Scenes using Procedural Generation
 
-![[Attachments/infinigen_indoor.jpeg]]
+![[Attachments/infinigen_indoor.jpeg|400]]
 
 Alexander Raistrick\*, Lingjie Mei\*, Karhan Kaan Kayan\* (\*equal contribution), David Yan, Yiming Zuo, Beining Han, Hongyu Wen, Meenal Parakh, Stamatis Alexandropoulos, Lahav Lipson, Zeyu Ma, Jia Deng
 
@@ -116,7 +96,7 @@ _CVPR 2023_
 
 ### Collision Replay: What Does Bumping Into Things Tell You About Scene Geometry?
 
-![[Attachments/collision.jpg]]
+![[Attachments/collision.jpg|400]]
 
 Alexander Raistrick, Nilesh Kulkarni and David F. Fouhey
 
@@ -126,7 +106,7 @@ _BMVC 2021 **(Oral)**_
 
 ### MRAT: The Mixed Reality Analytics Toolkit
 
-![[Attachments/mrat.jpg]]
+![[Attachments/mrat.jpg|400]]
 
 M. Nebeling, M. Speicher, X. Wang, S. Rajaram, B.D. Hall, Z. Xie, A.R.E. Raistrick, M. Aebersold, E.G. Happ, J. Wang, Y. Sun, L. Zhang, L. Ramsier, R. Kulkarni
 
