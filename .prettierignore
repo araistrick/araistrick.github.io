@@ -1,0 +1,4 @@
+public
+content/tools
+node_modules
+.quartz-cache
