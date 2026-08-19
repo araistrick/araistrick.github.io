@@ -32,12 +32,27 @@
 
 :root {
   --section-spacing: 3rem;
+  --page-background: #fff;
+  --page-text: #000;
+  --featured-accent: #b04435;
+  --footer-rule: rgb(0 0 0 / 25%);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page-background: #101010;
+    --page-text: #f4f4f4;
+    --featured-accent: #e67869;
+    --footer-rule: rgb(255 255 255 / 25%);
+    color-scheme: dark;
+  }
 }
 
 html,
 body {
-  background: #fff;
-  color: #000;
+  background: var(--page-background);
+  color: var(--page-text);
 }
 
 html {
@@ -103,7 +118,7 @@ h4 {
 }
 
 #research + ul > li:first-child > h3 > strong {
-  color: #b04435;
+  color: var(--featured-accent);
   font-style: italic;
   white-space: nowrap;
 }
@@ -197,7 +212,7 @@ p {
 
 a,
 a:visited {
-  color: #000;
+  color: var(--page-text);
   text-decoration-thickness: 0.05em;
   text-underline-offset: 0.15em;
 }
