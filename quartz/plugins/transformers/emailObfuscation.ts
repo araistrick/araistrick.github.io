@@ -13,13 +13,6 @@ const decodeEmailValue = (value) => {
 }
 
 const revealEmails = () => {
-  for (const element of document.querySelectorAll("[data-email-obfuscated]")) {
-    const value = element.getAttribute("data-email-obfuscated")
-    if (value === null) continue
-    element.setAttribute("href", decodeEmailValue(value))
-    element.removeAttribute("data-email-obfuscated")
-  }
-
   for (const element of document.querySelectorAll("[data-email-text]")) {
     const value = element.getAttribute("data-email-text")
     if (value === null) continue
@@ -48,24 +41,16 @@ function encode(value: string): string {
     .join("")
 }
 
-function obfuscatedEmail(email: string, insideLink: boolean): Element {
-  const properties: Element["properties"] = {
-    "data-email-text": encode(email),
-  }
-
-  if (!insideLink) {
-    properties["data-email-obfuscated"] = encode(`mailto:${email}`)
-  }
-
+function obfuscatedEmail(email: string): Element {
   return {
     type: "element",
-    tagName: insideLink ? "span" : "a",
-    properties,
+    tagName: "span",
+    properties: { "data-email-text": encode(email) },
     children: [{ type: "text", value: "Email" }],
   }
 }
 
-function obfuscateText(text: Text, insideLink: boolean): ElementContent[] {
+function obfuscateText(text: Text): ElementContent[] {
   const children: ElementContent[] = []
   let cursor = 0
 
@@ -76,7 +61,7 @@ function obfuscateText(text: Text, insideLink: boolean): ElementContent[] {
     }
 
     const email = match[0]
-    children.push(obfuscatedEmail(email, insideLink))
+    children.push(obfuscatedEmail(email))
     cursor = index + email.length
   }
 
@@ -87,21 +72,27 @@ function obfuscateText(text: Text, insideLink: boolean): ElementContent[] {
   return children.length === 0 ? [text] : children
 }
 
-function obfuscateElement(element: Element, insideLink: boolean): void {
-  const isLink = element.tagName === "a"
+function obfuscateElement(element: Element): void {
   const href = element.properties.href
-  if (isLink && typeof href === "string" && href.toLowerCase().startsWith("mailto:")) {
-    element.properties["data-email-obfuscated"] = encode(href)
-    delete element.properties.href
+  if (
+    element.tagName === "a" &&
+    typeof href === "string" &&
+    href.toLowerCase().startsWith("mailto:")
+  ) {
+    const email = href.slice(7).split("?", 1)[0]
+    element.tagName = "span"
+    element.properties = { "data-email-text": encode(email) }
+    element.children = [{ type: "text", value: "Email" }]
+    return
   }
 
   element.children = element.children.flatMap((child) => {
     if (child.type === "text") {
-      return obfuscateText(child, insideLink || isLink)
+      return obfuscateText(child)
     }
 
     if (isElement(child)) {
-      obfuscateElement(child, insideLink || isLink)
+      obfuscateElement(child)
     }
 
     return child
@@ -112,12 +103,12 @@ export function obfuscateEmailAddresses(tree: Root): void {
   const children: RootContent[] = []
   for (const child of tree.children) {
     if (child.type === "text") {
-      children.push(...obfuscateText(child, false))
+      children.push(...obfuscateText(child))
       continue
     }
 
     if (isElement(child)) {
-      obfuscateElement(child, false)
+      obfuscateElement(child)
     }
 
     children.push(child)

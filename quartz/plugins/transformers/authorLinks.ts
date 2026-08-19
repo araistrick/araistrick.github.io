@@ -77,13 +77,24 @@ function linkChildren(
   })
 }
 
+function isAuthorMarker(node: ElementContent): node is Element {
+  return isElement(node, "a") && node.properties.href === "#authors" && node.children.length === 0
+}
+
 function authorEmphasis(node: RootContent): Element | undefined {
-  if (!isElement(node, "p") || node.children.length !== 1) {
+  if (!isElement(node, "p") || !isAuthorMarker(node.children[0])) {
     return undefined
   }
 
-  const child = node.children[0]
-  return isElement(child, "em") ? child : undefined
+  const gap = node.children[1]
+  const emphasisIndex = gap?.type === "text" && gap.value.trim() === "" ? 2 : 1
+  const emphasis = node.children[emphasisIndex]
+  if (!isElement(emphasis, "em")) {
+    return undefined
+  }
+
+  node.children.splice(0, emphasisIndex)
+  return emphasis
 }
 
 function linkAuthorLines(

@@ -24,12 +24,13 @@ describe("author links", () => {
       new URL("../../../WebsiteContent/index.md", import.meta.url),
       "utf8",
     )
-    const allPapers = markdown.slice(markdown.indexOf("### All Papers"))
-    const authorLines = allPapers.split("\n").filter((line) => /^_.*_$/.test(line))
+    const authorLines = markdown.split("\n").filter((line) => line.includes("[](#authors)"))
+    assert(authorLines.length > 0, "expected marked author rows")
     const authors = authorLines.flatMap((line) => {
-      const withoutNote = line.replace(/\s*\(\\?\*equal contribution[^)]*\)/, "")
+      const match = line.match(/\[\]\(#authors\)\s+_([^_]+)_/)
+      assert(match, `invalid author row: ${line}`)
+      const withoutNote = match[1].replace(/\s*\(\\?\*equal contribution[^)]*\)/, "")
       return withoutNote
-        .slice(1, -1)
         .replaceAll("\\*", "*")
         .split(/,\s*|\s+and\s+/)
         .map((name) => name.replace(/\*$/, ""))
@@ -40,20 +41,24 @@ describe("author links", () => {
     }
   })
 
-  test("links exact names in standalone italic lines throughout the document", () => {
+  test("links explicitly marked author rows throughout the document", () => {
     const tree = document([
-      element("p", [element("em", [{ type: "text", value: "Alice Smith" }])]),
       element("p", [
-        { type: "text", value: "Inline " },
-        element("em", [{ type: "text", value: "Bob Jones" }]),
+        element("a", [], { href: "#authors" }),
+        { type: "text", value: " " },
+        element("em", [{ type: "text", value: "Alice Smith" }]),
+        { type: "text", value: " — Released 2026-01-01, Preprint." },
       ]),
       element("ul", [
         element("li", [
           element("h3"),
           element("p", [
+            element("a", [], { href: "#authors" }),
+            { type: "text", value: " " },
             element("em", [
               { type: "text", value: "Alice Smith*, Bob Jones (*equal contribution)" },
             ]),
+            { type: "text", value: " — Released 2025-01-01, Published at Example." },
           ]),
         ]),
       ]),
@@ -67,16 +72,36 @@ describe("author links", () => {
     const html = toHtml(tree)
     assert.strictEqual(html.match(/href="https:\/\/example.com\/alice"/g)?.length, 2)
     assert.strictEqual(html.match(/href="https:\/\/example.com\/bob"/g)?.length, 1)
-    assert.match(html, /Inline <em>Bob Jones<\/em>/)
+    assert.doesNotMatch(html, /href="#authors"/)
+    assert.match(html, /<\/em> — Released 2026-01-01, Preprint\.<\/p>/)
     assert.match(
       html,
       /<em><a href="https:\/\/example.com\/alice">Alice Smith<\/a>\*, <a href="https:\/\/example.com\/bob">Bob Jones<\/a> \(\*equal contribution\)<\/em>/,
     )
   })
 
+  test("ignores unmarked italic text", () => {
+    const tree = document([
+      element("p", [element("em", [{ type: "text", value: "Alice Smith" }])]),
+      element("p", [
+        { type: "text", value: "Inline " },
+        element("em", [{ type: "text", value: "Bob Jones" }]),
+      ]),
+    ])
+
+    authorLinks.linkAuthorNames(tree, {
+      "Alice Smith": "https://example.com/alice",
+      "Bob Jones": "https://example.com/bob",
+    })
+
+    assert.doesNotMatch(toHtml(tree), /href="https:\/\/example.com/)
+  })
+
   test("does not nest links or match names inside longer words", () => {
     const tree = document([
       element("p", [
+        element("a", [], { href: "#authors" }),
+        { type: "text", value: " " },
         element("em", [
           element("a", [{ type: "text", value: "Ann" }], { href: "https://old.example" }),
           { type: "text", value: ", Joanne, Ann" },

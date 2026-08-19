@@ -47,18 +47,14 @@ describe("email obfuscation", () => {
     assert(!html.includes("alice@example.com"))
     assert(!html.includes("bob.smith+lab@example.org"))
     assert(!html.includes("mailto:"))
-    assert.strictEqual(
-      decode(String(mailto.properties["data-email-obfuscated"])),
-      "mailto:alice@example.com?subject=Hello",
-    )
+    assert.strictEqual(mailto.tagName, "span")
+    assert.strictEqual(mailto.properties.href, undefined)
+    assert.strictEqual(decode(String(mailto.properties["data-email-text"])), "alice@example.com")
+    assert.strictEqual(mailto.properties["data-email-obfuscated"], undefined)
 
     const paragraph = tree.children[0] as Element
     const visibleEmail = paragraph.children[2] as Element
-    assert.strictEqual(visibleEmail.tagName, "a")
-    assert.strictEqual(
-      decode(String(visibleEmail.properties["data-email-obfuscated"])),
-      "mailto:bob.smith+lab@example.org",
-    )
+    assert.strictEqual(visibleEmail.tagName, "span")
     assert.strictEqual(
       decode(String(visibleEmail.properties["data-email-text"])),
       "bob.smith+lab@example.org",
@@ -75,8 +71,8 @@ describe("email obfuscation", () => {
     emailObfuscation.obfuscateEmailAddresses(tree)
 
     const html = toHtml(tree)
-    assert.strictEqual(html.match(/<a(?: |\>)/g)?.length, 1)
-    assert.match(html, /<span data-email-text="[^"]+">Email<\/span>/)
+    assert(!html.includes("<a"))
+    assert.match(html, /^<span data-email-text="[^"]+">Email<\/span>$/)
     assert(!html.includes("alice@example.com"))
   })
 
@@ -96,24 +92,19 @@ describe("email obfuscation", () => {
     assert.strictEqual(toHtml(tree), before)
   })
 
-  test("reconstructs links and visible addresses in the browser", () => {
+  test("reveals addresses as plain text in the browser", () => {
     const tree = document([
       element("a", [{ type: "text", value: "alice@example.com" }], {
         href: "mailto:alice@example.com",
       }),
     ])
     emailObfuscation.obfuscateEmailAddresses(tree)
-    const anchor = tree.children[0] as Element
-    const text = anchor.children[0] as Element
-    const linkElement = runtimeElement({
-      "data-email-obfuscated": String(anchor.properties["data-email-obfuscated"]),
-    })
+    const text = tree.children[0] as Element
     const textElement = runtimeElement({
       "data-email-text": String(text.properties["data-email-text"]),
     })
     const browserDocument = {
-      querySelectorAll: (selector: string) =>
-        selector === "[data-email-obfuscated]" ? [linkElement] : [textElement],
+      querySelectorAll: () => [textElement],
       addEventListener: () => undefined,
     }
     const run = new Function(
@@ -125,7 +116,8 @@ describe("email obfuscation", () => {
 
     run(browserDocument, atob, TextDecoder)
 
-    assert.strictEqual(linkElement.getAttribute("href"), "mailto:alice@example.com")
+    assert(!emailObfuscation.emailObfuscationScript.includes('setAttribute("href"'))
+    assert.strictEqual(textElement.getAttribute("href"), null)
     assert.strictEqual(textElement.textContent, "alice@example.com")
   })
 
