@@ -86,8 +86,22 @@ function authorEmphasis(node: RootContent): Element | undefined {
   return isElement(child, "em") ? child : undefined
 }
 
-function isSectionHeading(node: RootContent): boolean {
-  return isElement(node) && ["h1", "h2", "h3"].includes(node.tagName)
+function linkAuthorLines(
+  node: Root | Element,
+  matcher: RegExp,
+  authors: Readonly<Record<string, string>>,
+): void {
+  for (const child of node.children) {
+    const emphasis = authorEmphasis(child)
+    if (emphasis !== undefined) {
+      emphasis.children = linkChildren(emphasis.children, matcher, authors)
+      continue
+    }
+
+    if (isElement(child)) {
+      linkAuthorLines(child, matcher, authors)
+    }
+  }
 }
 
 export function linkAuthorNames(tree: Root, authors: Readonly<Record<string, string>>): void {
@@ -96,38 +110,7 @@ export function linkAuthorNames(tree: Root, authors: Readonly<Record<string, str
     return
   }
 
-  let insideAllPapers = false
-  let awaitingAuthors = false
-  for (const child of tree.children) {
-    if (isElement(child, "h3")) {
-      insideAllPapers = child.properties.id === "all-papers"
-      awaitingAuthors = false
-      continue
-    }
-
-    if (!insideAllPapers) {
-      continue
-    }
-
-    if (isSectionHeading(child)) {
-      insideAllPapers = false
-      awaitingAuthors = false
-      continue
-    }
-
-    if (isElement(child, "h4")) {
-      awaitingAuthors = true
-      continue
-    }
-
-    const emphasis = authorEmphasis(child)
-    if (!awaitingAuthors || emphasis === undefined) {
-      continue
-    }
-
-    emphasis.children = linkChildren(emphasis.children, matcher, authors)
-    awaitingAuthors = false
-  }
+  linkAuthorLines(tree, matcher, authors)
 }
 
 export const AuthorLinks: QuartzTransformerPlugin<Options> = (options) => {

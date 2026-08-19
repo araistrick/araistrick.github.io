@@ -40,17 +40,23 @@ describe("author links", () => {
     }
   })
 
-  test("links exact names only in All Papers author lines", () => {
+  test("links exact names in standalone italic lines throughout the document", () => {
     const tree = document([
       element("p", [element("em", [{ type: "text", value: "Alice Smith" }])]),
-      element("h3", [], { id: "all-papers" }),
-      element("h4"),
-      element("p", [{ type: "text", value: "paper links" }]),
       element("p", [
-        element("em", [{ type: "text", value: "Alice Smith*, Bob Jones (*equal contribution)" }]),
+        { type: "text", value: "Inline " },
+        element("em", [{ type: "text", value: "Bob Jones" }]),
       ]),
-      element("h3", [], { id: "next-section" }),
-      element("p", [element("em", [{ type: "text", value: "Bob Jones" }])]),
+      element("ul", [
+        element("li", [
+          element("h3"),
+          element("p", [
+            element("em", [
+              { type: "text", value: "Alice Smith*, Bob Jones (*equal contribution)" },
+            ]),
+          ]),
+        ]),
+      ]),
     ])
 
     authorLinks.linkAuthorNames(tree, {
@@ -59,8 +65,9 @@ describe("author links", () => {
     })
 
     const html = toHtml(tree)
-    assert.strictEqual(html.match(/href="https:\/\/example.com\/alice"/g)?.length, 1)
+    assert.strictEqual(html.match(/href="https:\/\/example.com\/alice"/g)?.length, 2)
     assert.strictEqual(html.match(/href="https:\/\/example.com\/bob"/g)?.length, 1)
+    assert.match(html, /Inline <em>Bob Jones<\/em>/)
     assert.match(
       html,
       /<em><a href="https:\/\/example.com\/alice">Alice Smith<\/a>\*, <a href="https:\/\/example.com\/bob">Bob Jones<\/a> \(\*equal contribution\)<\/em>/,
@@ -69,9 +76,6 @@ describe("author links", () => {
 
   test("does not nest links or match names inside longer words", () => {
     const tree = document([
-      element("h3", [], { id: "all-papers" }),
-      element("h4"),
-      element("p", [{ type: "text", value: "paper links" }]),
       element("p", [
         element("em", [
           element("a", [{ type: "text", value: "Ann" }], { href: "https://old.example" }),

@@ -20,11 +20,15 @@ Send me anonymous personal feedback [here](https://docs.google.com/forms/d/e/1FA
 
   [![Infinigen 2 video](Attachments/infinigen2-youtube.jpg)](https://www.youtube.com/watch?v=_T-BAda645U)
 
+  _Alexander Raistrick, Karhan Kayan, Jack Nugent, David Yan, Lingjie Mei, Meenal Parakh, Hongyu Wen, Dylan Li, Yiming Zuo, Erich Liang, Jia Deng_
+
   [github](https://github.com/princeton-vl/procfunc) / [arxiv](https://arxiv.org/abs/2604.26943)
 
 - ### [Infinigen Articulated: Procedural Generation of Articulated Simulation-Ready Assets](#infinigen-articulated-procedural-generation-of-articulated-simulation-ready-assets-1)
 
   ![[Attachments/ca-infinigen-sim.mp4|400]]
+
+  _Abhishek Joshi, Beining Han, Jack Nugent, Max Gonzalez Saez-Diez, Yiming Zuo, Jonathan Liu, Hongyu Wen, Stamatis Alexandropoulos, Karhan Kayan, Anna Calveri, Tao Sun, Gaowen Liu, Yi Shao, Alexander Raistrick, Jia Deng_
 
   [github](https://github.com/princeton-vl/infinigen/blob/main/docs/ExportingToSimulators.md) / [arxiv](https://arxiv.org/abs/2505.10755) / [dataset](https://huggingface.co/datasets/princeton-vl/infinigen-articulated)
 
@@ -32,11 +36,15 @@ Send me anonymous personal feedback [here](https://docs.google.com/forms/d/e/1FA
 
   ![[Attachments/infinigen_indoor.jpeg|400]]
 
+  _Alexander Raistrick\*, Lingjie Mei\*, Karhan Kaan Kayan\* (\*equal contribution), David Yan, Yiming Zuo, Beining Han, Hongyu Wen, Meenal Parakh, Stamatis Alexandropoulos, Lahav Lipson, Zeyu Ma, Jia Deng_
+
   [github](https://github.com/princeton-vl/infinigen) / [website](https://infinigen.org/) / [arxiv](https://arxiv.org/abs/2406.11824) / [proceedings](https://openaccess.thecvf.com/content/CVPR2024/html/Raistrick_Infinigen_Indoors_Photorealistic_Indoor_Scenes_using_Procedural_Generation_CVPR_2024_paper.html)
 
 - ### [Infinigen: Infinite Photorealistic Worlds using Procedural Generation](#infinigen-infinite-photorealistic-worlds-using-procedural-generation-1)
 
   [![Infinigen video](Attachments/infinigen-youtube.jpg)](https://youtu.be/6tgspeI-GHY)
+
+  _Alexander Raistrick\*, Lahav Lipson\*, Zeyu Ma\* (\*equal contribution, alphabetical order), Lingjie Mei, Mingzhe Wang, Yiming Zuo, Karhan Kayan, Hongyu Wen, Beining Han, Yihan Wang, Alejandro Newell, Hei Law, Ankit Goyal, Kaiyu Yang, Jia Deng_
 
   [github](https://github.com/princeton-vl/infinigen) / [website](https://infinigen.org/) / [arxiv](https://arxiv.org/abs/2306.09310) / [video](https://youtu.be/6tgspeI-GHY) / [proceedings](https://openaccess.thecvf.com/content/CVPR2023/html/Raistrick_Infinite_Photorealistic_Worlds_Using_Procedural_Generation_CVPR_2023_paper.html)
 
