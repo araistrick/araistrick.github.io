@@ -98,6 +98,13 @@ h4 {
   margin: 0 0 0.75rem;
 }
 
+#research + ul > li:first-child > h3 > strong {
+  color: #b04435;
+  font-size: 0.72em;
+  font-style: italic;
+  white-space: nowrap;
+}
+
 h1 a[role="anchor"],
 h2 a[role="anchor"],
 h3 a[role="anchor"],
