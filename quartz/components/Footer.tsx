@@ -10,7 +10,8 @@ export default (() => {
       <footer class={`${displayClass ?? ""}`}>
         <p>
           Last updated <time datetime={timestamp}>{date}</time> — Font from{" "}
-          <a href="https://open-foundry.com/fonts/junicode">here</a>
+          <a href="https://open-foundry.com/fonts/junicode">here</a> — Source code{" "}
+          <a href="https://github.com/araistrick/araistrick.github.io">here</a>
         </p>
       </footer>
     )
