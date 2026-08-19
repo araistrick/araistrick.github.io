@@ -206,6 +206,13 @@ a:visited {
   text-decoration: underline;
 }
 
+:is(article, footer) p [data-email-text] {
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-thickness: 0.05em;
+  text-underline-offset: 0.15em;
+}
+
 /* Link markers paused.
 :is(article, footer) p a:not([role="anchor"]):not(:has(:is(img, video, iframe))) {
   position: relative;

@@ -12,17 +12,28 @@ const decodeEmailValue = (value) => {
   return new TextDecoder().decode(bytes)
 }
 
-const revealEmails = () => {
+const revealEmail = (element) => {
+  const value = element.getAttribute("data-email-text")
+  if (value === null) return
+  element.textContent = decodeEmailValue(value)
+  element.removeAttribute("data-email-text")
+  element.removeAttribute("role")
+  element.removeAttribute("tabindex")
+}
+
+const bindEmailReveals = () => {
   for (const element of document.querySelectorAll("[data-email-text]")) {
-    const value = element.getAttribute("data-email-text")
-    if (value === null) continue
-    element.textContent = decodeEmailValue(value)
-    element.removeAttribute("data-email-text")
+    element.addEventListener("click", () => revealEmail(element), { once: true })
+    element.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return
+      event.preventDefault()
+      revealEmail(element)
+    })
   }
 }
 
-document.addEventListener("nav", revealEmails)
-revealEmails()
+document.addEventListener("nav", bindEmailReveals)
+bindEmailReveals()
 `
 
 function isElement(node: RootContent | ElementContent): node is Element {
@@ -41,11 +52,15 @@ function encode(value: string): string {
     .join("")
 }
 
+function emailProperties(email: string): Element["properties"] {
+  return { "data-email-text": encode(email), role: "button", tabIndex: 0 }
+}
+
 function obfuscatedEmail(email: string): Element {
   return {
     type: "element",
     tagName: "span",
-    properties: { "data-email-text": encode(email) },
+    properties: emailProperties(email),
     children: [{ type: "text", value: "Email" }],
   }
 }
@@ -81,7 +96,7 @@ function obfuscateElement(element: Element): void {
   ) {
     const email = href.slice(7).split("?", 1)[0]
     element.tagName = "span"
-    element.properties = { "data-email-text": encode(email) }
+    element.properties = emailProperties(email)
     element.children = [{ type: "text", value: "Email" }]
     return
   }

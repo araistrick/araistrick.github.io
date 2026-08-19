@@ -24,11 +24,14 @@ function decode(value: string): string {
 
 function runtimeElement(attributes: Record<string, string>) {
   const values = new Map(Object.entries(attributes))
+  const listeners = new Map<string, () => void>()
   return {
     textContent: "Email",
     getAttribute: (name: string) => values.get(name) ?? null,
     setAttribute: (name: string, value: string) => values.set(name, value),
     removeAttribute: (name: string) => values.delete(name),
+    addEventListener: (name: string, listener: () => void) => listeners.set(name, listener),
+    click: () => listeners.get("click")?.(),
   }
 }
 
@@ -49,6 +52,8 @@ describe("email obfuscation", () => {
     assert(!html.includes("mailto:"))
     assert.strictEqual(mailto.tagName, "span")
     assert.strictEqual(mailto.properties.href, undefined)
+    assert.strictEqual(mailto.properties.role, "button")
+    assert.strictEqual(mailto.properties.tabIndex, 0)
     assert.strictEqual(decode(String(mailto.properties["data-email-text"])), "alice@example.com")
     assert.strictEqual(mailto.properties["data-email-obfuscated"], undefined)
 
@@ -72,7 +77,7 @@ describe("email obfuscation", () => {
 
     const html = toHtml(tree)
     assert(!html.includes("<a"))
-    assert.match(html, /^<span data-email-text="[^"]+">Email<\/span>$/)
+    assert.match(html, /^<span data-email-text="[^"]+" role="button" tabindex="0">Email<\/span>$/)
     assert(!html.includes("alice@example.com"))
   })
 
@@ -92,7 +97,7 @@ describe("email obfuscation", () => {
     assert.strictEqual(toHtml(tree), before)
   })
 
-  test("reveals addresses as plain text in the browser", () => {
+  test("reveals addresses as plain text only after a click", () => {
     const tree = document([
       element("a", [{ type: "text", value: "alice@example.com" }], {
         href: "mailto:alice@example.com",
@@ -118,7 +123,13 @@ describe("email obfuscation", () => {
 
     assert(!emailObfuscation.emailObfuscationScript.includes('setAttribute("href"'))
     assert.strictEqual(textElement.getAttribute("href"), null)
+    assert.strictEqual(textElement.textContent, "Email")
+    assert.notStrictEqual(textElement.getAttribute("data-email-text"), null)
+
+    textElement.click()
+
     assert.strictEqual(textElement.textContent, "alice@example.com")
+    assert.strictEqual(textElement.getAttribute("data-email-text"), null)
   })
 
   test("runs after link processing and before descriptions", () => {
