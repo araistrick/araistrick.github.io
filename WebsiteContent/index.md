@@ -20,15 +20,15 @@ Send me anonymous personal feedback [here](https://docs.google.com/forms/d/e/1FA
 
   [![Infinigen 2 video](Attachments/infinigen2-youtube.jpg)](https://www.youtube.com/watch?v=_T-BAda645U)
 
-  [](#authors) _Alexander Raistrick, Karhan Kayan, Jack Nugent, David Yan, Lingjie Mei, Meenal Parakh, Hongyu Wen, Dylan Li, Yiming Zuo, Erich Liang, Jia Deng_
+  [](#authors) _Alexander Raistrick, Karhan Kayan, Jack Nugent, David Yan, Lingjie Mei, Meenal Parakh, Hongyu Wen, Dylan Li, Yiming Zuo, Erich Liang, Jia Deng_ — Released 2026-04-29, Preprint.
 
-  [github](https://github.com/princeton-vl/procfunc) / [arxiv](https://arxiv.org/abs/2604.26943)
+  [github](https://github.com/princeton-vl/procfunc) / [arxiv](https://arxiv.org/abs/2604.26943) / [dataset](https://huggingface.co/datasets/infinigen/2026-08-flying-indoor-preview)
 
 - ### [Infinigen Articulated: Procedural Generation of Articulated Simulation-Ready Assets](https://github.com/princeton-vl/infinigen/blob/main/docs/source/ExportingToSimulators.md)
 
   ![[Attachments/ca-infinigen-sim.mp4|400]]
 
-  [](#authors) _Abhishek Joshi, Beining Han, Jack Nugent, Max Gonzalez Saez-Diez, Yiming Zuo, Jonathan Liu, Hongyu Wen, Stamatis Alexandropoulos, Karhan Kayan, Anna Calveri, Tao Sun, Gaowen Liu, Yi Shao, Alexander Raistrick, Jia Deng_
+  [](#authors) _Abhishek Joshi, Beining Han, Jack Nugent, Max Gonzalez Saez-Diez, Yiming Zuo, Jonathan Liu, Hongyu Wen, Stamatis Alexandropoulos, Karhan Kayan, Anna Calveri, Tao Sun, Gaowen Liu, Yi Shao, Alexander Raistrick, Jia Deng_ — Released 2025-05-15, Preprint.
 
   [github](https://github.com/princeton-vl/infinigen/blob/main/docs/source/ExportingToSimulators.md) / [arxiv](https://arxiv.org/abs/2505.10755) / [dataset](https://huggingface.co/datasets/princeton-vl/infinigen-articulated)
 
@@ -36,7 +36,7 @@ Send me anonymous personal feedback [here](https://docs.google.com/forms/d/e/1FA
 
   ![[Attachments/infinigen_indoor.jpeg|400]]
 
-  [](#authors) _Alexander Raistrick\*, Lingjie Mei\*, Karhan Kaan Kayan\* (\*equal contribution), David Yan, Yiming Zuo, Beining Han, Hongyu Wen, Meenal Parakh, Stamatis Alexandropoulos, Lahav Lipson, Zeyu Ma, Jia Deng_
+  [](#authors) _Alexander Raistrick\*, Lingjie Mei\*, Karhan Kaan Kayan\* (\*equal contribution), David Yan, Yiming Zuo, Beining Han, Hongyu Wen, Meenal Parakh, Stamatis Alexandropoulos, Lahav Lipson, Zeyu Ma, Jia Deng_ — Released 2024-06-17, Published at **CVPR 2024**.
 
   [github](https://github.com/princeton-vl/infinigen) / [website](https://infinigen.org/) / [arxiv](https://arxiv.org/abs/2406.11824) / [proceedings](https://openaccess.thecvf.com/content/CVPR2024/html/Raistrick_Infinigen_Indoors_Photorealistic_Indoor_Scenes_using_Procedural_Generation_CVPR_2024_paper.html)
 
@@ -44,9 +44,9 @@ Send me anonymous personal feedback [here](https://docs.google.com/forms/d/e/1FA
 
   [![Infinigen video](Attachments/infinigen-youtube.jpg)](https://youtu.be/6tgspeI-GHY)
 
-  [](#authors) _Alexander Raistrick, Lahav Lipson, Zeyu Ma, Lingjie Mei, Mingzhe Wang, Yiming Zuo, Karhan Kayan, Hongyu Wen, Beining Han, Yihan Wang, Alejandro Newell, Hei Law, Ankit Goyal, Kaiyu Yang, Jia Deng_
+  [](#authors) _Alexander Raistrick, Lahav Lipson, Zeyu Ma, Lingjie Mei, Mingzhe Wang, Yiming Zuo, Karhan Kayan, Hongyu Wen, Beining Han, Yihan Wang, Alejandro Newell, Hei Law, Ankit Goyal, Kaiyu Yang, Jia Deng_ — Released 2023-06-15, Published at **CVPR 2023**.
 
-  [github](https://github.com/princeton-vl/infinigen) / [website](https://infinigen.org/) / [arxiv](https://arxiv.org/abs/2306.09310) / [video](https://youtu.be/6tgspeI-GHY) / [proceedings](https://openaccess.thecvf.com/content/CVPR2023/html/Raistrick_Infinite_Photorealistic_Worlds_Using_Procedural_Generation_CVPR_2023_paper.html)
+  [github](https://github.com/princeton-vl/infinigen) / [website](https://infinigen.org/) / [arxiv](https://arxiv.org/abs/2306.09310) / [dataset](https://huggingface.co/datasets/infinigen/2023-10-nature-preview) / [video](https://youtu.be/6tgspeI-GHY) / [proceedings](https://openaccess.thecvf.com/content/CVPR2023/html/Raistrick_Infinite_Photorealistic_Worlds_Using_Procedural_Generation_CVPR_2023_paper.html)
 
 ### All Papers
 
@@ -54,7 +54,7 @@ Send me anonymous personal feedback [here](https://docs.google.com/forms/d/e/1FA
 
 [](#authors) _Alexander Raistrick, Karhan Kayan, Jack Nugent, David Yan, Lingjie Mei, Meenal Parakh, Hongyu Wen, Dylan Li, Yiming Zuo, Erich Liang, Jia Deng_ — Released 2026-04-29, Preprint.
 
-[github](https://github.com/princeton-vl/procfunc) / [arxiv](https://arxiv.org/abs/2604.26943)
+[github](https://github.com/princeton-vl/procfunc) / [arxiv](https://arxiv.org/abs/2604.26943) / [dataset](https://huggingface.co/datasets/infinigen/2026-08-flying-indoor-preview)
 
 #### SimpleProc: Fully Procedural Synthetic Data from Simple Rules for Multi-View Stereo
 
@@ -96,7 +96,7 @@ Send me anonymous personal feedback [here](https://docs.google.com/forms/d/e/1FA
 
 [](#authors) _Alexander Raistrick\*, Lahav Lipson\*, Zeyu Ma\* (\*equal contribution, alphabetical order), Lingjie Mei, Mingzhe Wang, Yiming Zuo, Karhan Kayan, Hongyu Wen, Beining Han, Yihan Wang, Alejandro Newell, Hei Law, Ankit Goyal, Kaiyu Yang, Jia Deng_ — Released 2023-06-15, Published at **CVPR 2023**.
 
-[github](https://github.com/princeton-vl/infinigen) / [website](https://infinigen.org/) / [arxiv](https://arxiv.org/abs/2306.09310) / [video](https://youtu.be/6tgspeI-GHY) / [proceedings](https://openaccess.thecvf.com/content/CVPR2023/html/Raistrick_Infinite_Photorealistic_Worlds_Using_Procedural_Generation_CVPR_2023_paper.html)
+[github](https://github.com/princeton-vl/infinigen) / [website](https://infinigen.org/) / [arxiv](https://arxiv.org/abs/2306.09310) / [dataset](https://huggingface.co/datasets/infinigen/2023-10-nature-preview) / [video](https://youtu.be/6tgspeI-GHY) / [proceedings](https://openaccess.thecvf.com/content/CVPR2023/html/Raistrick_Infinite_Photorealistic_Worlds_Using_Procedural_Generation_CVPR_2023_paper.html)
 
 #### Collision Replay: What Does Bumping Into Things Tell You About Scene Geometry?
 
