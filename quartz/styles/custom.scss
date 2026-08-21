@@ -210,6 +210,10 @@ p {
   margin: 0.75rem 0;
 }
 
+article > p:has(> a[href="https://github.com/araistrick"]) {
+  margin-top: 1.75rem;
+}
+
 a,
 a:visited {
   color: var(--page-text);
