@@ -4,11 +4,7 @@ title: Alexander Raistrick
 
 # Alexander Raistrick
 
-I'm a Ph.D student at Princeton University advised by [Jia Deng](https://www.cs.princeton.edu/~jiadeng/).
-
-I work on [Infinigen](https://infinigen.org), a procedural 3D data generator for computer vision and robotics.
-
-I did my undergrad at the University of Michigan, and was fortunate to work with [David Fouhey](https://web.eecs.umich.edu/~fouhey/) and previously [Michael Nebeling](http://michael-nebeling.de/).
+I'm a Ph.D student at Princeton University advised by [Jia Deng](https://www.cs.princeton.edu/~jiadeng/).  I work on [Infinigen](https://infinigen.org), a procedural 3D data generator for computer vision and robotics. Previously, I was an undergrad at the University of Michigan, and was fortunate to work with [David Fouhey](https://web.eecs.umich.edu/~fouhey/) and previously [Michael Nebeling](http://michael-nebeling.de/).
 
 [Email](mailto:araistrick@princeton.edu) / [GitHub](https://github.com/araistrick) / [Google Scholar](https://scholar.google.com/citations?user=GYwaBgoAAAAJ&hl=en) / [[Attachments/curriculum_vitae.pdf|CV]] / [Twitter](https://twitter.com/alex_raistrick)
 
