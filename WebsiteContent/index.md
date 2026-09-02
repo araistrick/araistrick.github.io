@@ -10,7 +10,17 @@ I'm a Ph.D student at Princeton University advised by [Jia Deng](https://www.cs.
 
 Send me anonymous personal feedback [here](https://docs.google.com/forms/d/e/1FAIpQLSclvXp7rPuOjqX7T2s2AhVf62mVm1KBQG2wI-K_H98MKl55fw/viewform?usp=header)!
 
+(New!) I am currently interning at Google DeepMind NYC!
+
 ## Research
+
+- ### [Infinigen: Infinite Photorealistic Worlds using Procedural Generation](https://github.com/princeton-vl/infinigen)
+
+  [![Infinigen video](Attachments/infinigen-youtube.jpg)](https://youtu.be/6tgspeI-GHY)
+
+  [](#authors) _Alexander Raistrick, Lahav Lipson, Zeyu Ma, Lingjie Mei, Mingzhe Wang, Yiming Zuo, Karhan Kayan, Hongyu Wen, Beining Han, Yihan Wang, Alejandro Newell, Hei Law, Ankit Goyal, Kaiyu Yang, Jia Deng_ — Released 2023-06-15, Published at **CVPR 2023**.
+
+  [github](https://github.com/princeton-vl/infinigen) / [website](https://infinigen.org/) / [arxiv](https://arxiv.org/abs/2306.09310) / [dataset](https://huggingface.co/datasets/infinigen/2023-10-nature-preview) / [video](https://youtu.be/6tgspeI-GHY) / [proceedings](https://openaccess.thecvf.com/content/CVPR2023/html/Raistrick_Infinite_Photorealistic_Worlds_Using_Procedural_Generation_CVPR_2023_paper.html)
 
 - ### [ProcFunc: Function-Oriented Abstractions for Procedural 3D Generation in Python](https://github.com/princeton-vl/procfunc) **(New!)**
 
@@ -20,14 +30,6 @@ Send me anonymous personal feedback [here](https://docs.google.com/forms/d/e/1FA
 
   [github](https://github.com/princeton-vl/procfunc) / [arxiv](https://arxiv.org/abs/2604.26943) / [dataset](https://huggingface.co/datasets/infinigen/2026-08-flying-indoor-preview)
 
-- ### [Infinigen Articulated: Procedural Generation of Articulated Simulation-Ready Assets](https://github.com/princeton-vl/infinigen/blob/main/docs/source/ExportingToSimulators.md)
-
-  ![[Attachments/ca-infinigen-sim.mp4|400]]
-
-  [](#authors) _Abhishek Joshi, Beining Han, Jack Nugent, Max Gonzalez Saez-Diez, Yiming Zuo, Jonathan Liu, Hongyu Wen, Stamatis Alexandropoulos, Karhan Kayan, Anna Calveri, Tao Sun, Gaowen Liu, Yi Shao, Alexander Raistrick, Jia Deng_ — Released 2025-05-15, Preprint.
-
-  [github](https://github.com/princeton-vl/infinigen/blob/main/docs/source/ExportingToSimulators.md) / [arxiv](https://arxiv.org/abs/2505.10755) / [dataset](https://huggingface.co/datasets/princeton-vl/infinigen-articulated)
-
 - ### [Infinigen Indoors: Photorealistic Indoor Scenes using Procedural Generation](https://github.com/princeton-vl/infinigen)
 
   ![[Attachments/infinigen_indoor.jpeg|400]]
@@ -36,13 +38,13 @@ Send me anonymous personal feedback [here](https://docs.google.com/forms/d/e/1FA
 
   [github](https://github.com/princeton-vl/infinigen) / [website](https://infinigen.org/) / [arxiv](https://arxiv.org/abs/2406.11824) / [proceedings](https://openaccess.thecvf.com/content/CVPR2024/html/Raistrick_Infinigen_Indoors_Photorealistic_Indoor_Scenes_using_Procedural_Generation_CVPR_2024_paper.html)
 
-- ### [Infinigen: Infinite Photorealistic Worlds using Procedural Generation](https://github.com/princeton-vl/infinigen)
+- ### [Infinigen Articulated: Procedural Generation of Articulated Simulation-Ready Assets](https://github.com/princeton-vl/infinigen/blob/main/docs/source/ExportingToSimulators.md)
 
-  [![Infinigen video](Attachments/infinigen-youtube.jpg)](https://youtu.be/6tgspeI-GHY)
+  ![[Attachments/ca-infinigen-sim.mp4|400]]
 
-  [](#authors) _Alexander Raistrick, Lahav Lipson, Zeyu Ma, Lingjie Mei, Mingzhe Wang, Yiming Zuo, Karhan Kayan, Hongyu Wen, Beining Han, Yihan Wang, Alejandro Newell, Hei Law, Ankit Goyal, Kaiyu Yang, Jia Deng_ — Released 2023-06-15, Published at **CVPR 2023**.
+  [](#authors) _Abhishek Joshi, Beining Han, Jack Nugent, Max Gonzalez Saez-Diez, Yiming Zuo, Jonathan Liu, Hongyu Wen, Stamatis Alexandropoulos, Karhan Kayan, Anna Calveri, Tao Sun, Gaowen Liu, Yi Shao, Alexander Raistrick, Jia Deng_ — Released 2025-05-15, Preprint.
 
-  [github](https://github.com/princeton-vl/infinigen) / [website](https://infinigen.org/) / [arxiv](https://arxiv.org/abs/2306.09310) / [dataset](https://huggingface.co/datasets/infinigen/2023-10-nature-preview) / [video](https://youtu.be/6tgspeI-GHY) / [proceedings](https://openaccess.thecvf.com/content/CVPR2023/html/Raistrick_Infinite_Photorealistic_Worlds_Using_Procedural_Generation_CVPR_2023_paper.html)
+  [github](https://github.com/princeton-vl/infinigen/blob/main/docs/source/ExportingToSimulators.md) / [arxiv](https://arxiv.org/abs/2505.10755) / [dataset](https://huggingface.co/datasets/princeton-vl/infinigen-articulated)
 
 ### All Papers
 
