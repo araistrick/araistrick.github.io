@@ -42,7 +42,7 @@ Send me anonymous personal feedback [here](https://docs.google.com/forms/d/e/1FA
 
   ![[Attachments/ca-infinigen-sim.mp4|400]]
 
-  [](#authors) _Abhishek Joshi, Beining Han, Jack Nugent, Max Gonzalez Saez-Diez, Yiming Zuo, Jonathan Liu, Hongyu Wen, Stamatis Alexandropoulos, Karhan Kayan, Anna Calveri, Tao Sun, Gaowen Liu, Yi Shao, Alexander Raistrick, Jia Deng_ — Released 2025-05-15, Preprint.
+  [](#authors) _Abhishek Joshi, Beining Han, Jack Nugent, Max Gonzalez Saez-Diez, Yiming Zuo, Jonathan Liu, Hongyu Wen, Stamatis Alexandropoulos, Karhan Kayan, Anna Calveri, Tao Sun, Gaowen Liu, Yi Shao, Alexander Raistrick, Jia Deng_ — Released 2025-05-15, Published at **CoRL 2026**.
 
   [github](https://github.com/princeton-vl/infinigen/blob/main/docs/source/ExportingToSimulators.md) / [arxiv](https://arxiv.org/abs/2505.10755) / [dataset](https://huggingface.co/datasets/princeton-vl/infinigen-articulated)
 
@@ -74,7 +74,7 @@ Send me anonymous personal feedback [here](https://docs.google.com/forms/d/e/1FA
 
 #### Infinigen Articulated: Procedural Generation of Articulated Simulation-Ready Assets
 
-[](#authors) _Abhishek Joshi, Beining Han, Jack Nugent, Max Gonzalez Saez-Diez, Yiming Zuo, Jonathan Liu, Hongyu Wen, Stamatis Alexandropoulos, Karhan Kayan, Anna Calveri, Tao Sun, Gaowen Liu, Yi Shao, Alexander Raistrick, Jia Deng_ — Released 2025-05-15, Preprint.
+[](#authors) _Abhishek Joshi, Beining Han, Jack Nugent, Max Gonzalez Saez-Diez, Yiming Zuo, Jonathan Liu, Hongyu Wen, Stamatis Alexandropoulos, Karhan Kayan, Anna Calveri, Tao Sun, Gaowen Liu, Yi Shao, Alexander Raistrick, Jia Deng_ — Released 2025-05-15, Published at **CoRL 2026**.
 
 [github](https://github.com/princeton-vl/infinigen/blob/main/docs/source/ExportingToSimulators.md) / [arxiv](https://arxiv.org/abs/2505.10755) / [dataset](https://huggingface.co/datasets/princeton-vl/infinigen-articulated)
 
