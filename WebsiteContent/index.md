@@ -8,7 +8,7 @@ I'm a final-year Ph.D student at Princeton University advised by [Jia Deng](http
 
 Previously, I was an undergrad at the University of Michigan, and was fortunate to work with [David Fouhey](https://web.eecs.umich.edu/~fouhey/) and previously [Michael Nebeling](http://michael-nebeling.de/).
 
-[Email](mailto:araistrick@princeton.edu) / [GitHub](https://github.com/araistrick) / [Google Scholar](https://scholar.google.com/citations?user=GYwaBgoAAAAJ&hl=en) / [Twitter](https://twitter.com/alex_raistrick) — Send me anonymous personal feedback [here](https://docs.google.com/forms/d/e/1FAIpQLSclvXp7rPuOjqX7T2s2AhVf62mVm1KBQG2wI-K_H98MKl55fw/viewform?usp=header)!
+[Email](mailto:araistrick@princeton.edu) / [GitHub](https://github.com/araistrick) / [Google Scholar](https://scholar.google.com/citations?user=GYwaBgoAAAAJ&hl=en) / [Twitter](https://twitter.com/alex_raistrick) — Send me anonymous feedback [here](https://docs.google.com/forms/d/e/1FAIpQLSclvXp7rPuOjqX7T2s2AhVf62mVm1KBQG2wI-K_H98MKl55fw/viewform?usp=header)!
 
 (New!) I am currently interning at Google DeepMind NYC!
 
